@@ -15,4 +15,12 @@ class Test
     {
         return $param;
     }
+
+    /**
+     * @param $param
+     * @return mixed
+     */
+    public function change($param){
+        return $param;
+    }
 }
