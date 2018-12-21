@@ -49,7 +49,7 @@ class Common
     }
 
     /**
-     * 获取文件树
+     * 遍历文件夹获取文件树
      * @param $dir
      * @param int $key
      * @return array|bool
