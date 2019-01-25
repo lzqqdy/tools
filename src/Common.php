@@ -172,7 +172,7 @@ class Common
      */
     function groupBy($arr, $keyField)
     {
-        $ret = array();
+        $ret = [];
         foreach ($arr as $row) {
             $key = $row[$keyField];
             $ret[$key][] = $row;
