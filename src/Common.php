@@ -10,9 +10,9 @@ class Common
 {
     /**
      * 多维数组按照某字段排序
-     * @param $array
-     * @param $field
-     * @param $sort
+     * @param array $array 数据源
+     * @param string $field 字段
+     * @param string $sort 排序规则
      * @return mixed
      */
     function sortArrByOneField(&$array, $field, $sort)
@@ -27,8 +27,8 @@ class Common
 
     /**
      * 多维数组格式化日期
-     * @param $data
-     * @param $field
+     * @param array $data 数据源
+     * @param string $field 字段
      * @param string $format
      * @return array
      */
@@ -50,7 +50,7 @@ class Common
 
     /**
      * 遍历文件夹获取文件树
-     * @param $dir
+     * @param string $dir 文件夹路径
      * @param int $key
      * @return array|bool
      */
@@ -127,8 +127,8 @@ class Common
 
     /**
      * 二维数组根据键值去重
-     * @param $arr
-     * @param $key
+     * @param array $arr 数据源
+     * @param string $key 键值
      * @return array
      */
     function unique(&$arr, $key)
@@ -141,6 +141,43 @@ class Common
         }
         $arr = array_values($rAr);
         return $arr;
+    }
+
+    /**
+     * 获取指定键所有值的数组
+     * @param array $arr 数据源
+     * @param string $col 要查询的键
+     * @return array
+     */
+    function getCols($arr, $col)
+    {
+        $ret = [];
+        foreach ($arr as $row) {
+            if (is_array($row)) {
+                if (isset($row[$col])) {
+                    $ret[] = $row[$col];
+                }
+            } else {
+                $ret = [$col => $arr[$col]];
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * 将一个二维数组按照指定字段的值分组
+     * @param array $arr 数据源
+     * @param string $keyField 作为分组依据的键名
+     * @return array 分组后的结果
+     */
+    function groupBy($arr, $keyField)
+    {
+        $ret = array();
+        foreach ($arr as $row) {
+            $key = $row[$keyField];
+            $ret[$key][] = $row;
+        }
+        return $ret;
     }
 
     /**
@@ -223,4 +260,5 @@ class Common
 
         return round($calculatedDistance);
     }
+
 }
