@@ -131,7 +131,7 @@ class Common
      * @param $key
      * @return array
      */
-    function assoc_unique(&$arr, $key)
+    function unique(&$arr, $key)
     {
         $rAr = [];
         for ($i = 0; $i < count($arr); $i++) {
