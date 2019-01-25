@@ -181,6 +181,48 @@ class Common
     }
 
     /**
+     * 从数组中删除空白的元素（包括只有空白字符的元素）
+     * @param array $arr 要处理的数组
+     * @param boolean $trim 是否对数组元素调用 trim 函数
+     */
+    function removeEmpty(& $arr, $trim = TRUE)
+    {
+        foreach ($arr as $key => $value) {
+            if (is_array($value)) {
+                $this->removeEmpty($arr[$key]);
+            } else {
+                $value = trim($value); //移除字符串两侧的字符
+                if ($value == '') {
+                    unset($arr[$key]);
+                } elseif ($trim) {
+                    $arr[$key] = $value;
+                }
+            }
+        }
+    }
+
+    /**
+     * 返回数组层数(一维，二维..)
+     * @param array $arr 数据源
+     * @return int 数组层数
+     */
+    function getArrayLevel($arr)
+    {
+        if (!is_array($arr)) {
+            return 0;
+        } else {
+            $max = 0;
+            foreach ($arr as $v) {
+                $ret = $this->getArrayLevel($v);
+                if ($ret > $max) {
+                    $max = $ret;
+                }
+            }
+            return $max + 1;
+        }
+    }
+
+    /**
      * curl请求Api接口
      * @param $uri
      * @param array $data
