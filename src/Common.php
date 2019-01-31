@@ -18,7 +18,8 @@ class Common
     function sortArrByOneField(&$array, $field, $sort)
     {
         $fieldArr = [];
-        foreach ($array as $k => $v) {
+        foreach ($array as $k => $v)
+        {
             $fieldArr[$k] = $v[$field];
         }
         array_multisort($fieldArr, $sort, $array);
@@ -35,11 +36,15 @@ class Common
     function formatDate($data, $field, $format = 'y-m-d H:i')
     {
         $return = [];
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
+        foreach ($data as $key => $value)
+        {
+            if (is_array($value))
+            {
                 $this->formatDate($value, $field);
-            } else {
-                if ($key == $field) {
+            } else
+            {
+                if ($key == $field)
+                {
                     $data[$key] = date($format, $value);
                     array_push($return, $data);
                 }
@@ -56,7 +61,8 @@ class Common
      */
     function getFilesTree($dir, $key = 0)
     {
-        if (!is_dir($dir)) {
+        if (!is_dir($dir))
+        {
             return false;
         }
         $domain = $_SERVER['SERVER_NAME'];
@@ -64,15 +70,18 @@ class Common
         $files = [];
         $pattern = $dir . "*";
         $file_arr = glob($pattern);
-        foreach ($file_arr as $k => $file) {
+        foreach ($file_arr as $k => $file)
+        {
             $filename = str_replace('/', '', strrchr($file, '/'));
             $id = $k + 1;
-            if ($key > 0) {
+            if ($key > 0)
+            {
                 $id = $id + ($key * 10);
             }
             $new_file = str_replace('./', '', $file);
             $path = $domain . '/' . $new_file;
-            if (is_dir($file)) {
+            if (is_dir($file))
+            {
                 $files[] = [
                     'id' => $id,
                     'pId' => $key,
@@ -81,10 +90,12 @@ class Common
                     'path' => $path,
                 ];
                 $temp = $this->getFilesTree($file, $id);
-                if (is_array($temp)) {
+                if (is_array($temp))
+                {
                     $files = array_merge($files, $temp);
                 }
-            } else {
+            } else
+            {
                 $files[] = [
                     'id' => $id,
                     'pId' => $key,
@@ -109,14 +120,18 @@ class Common
     {
         $trees = [];
         $lists = array_values($lists);
-        foreach ($lists as $key => $value) {
-            if ($value['pId'] == $pid) {
-                if ($max_level > 0 && $curr_level == $max_level) {
+        foreach ($lists as $key => $value)
+        {
+            if ($value['pId'] == $pid)
+            {
+                if ($max_level > 0 && $curr_level == $max_level)
+                {
                     return $trees;
                 }
                 unset($lists[$key]);
                 $child = $this->toLayer($lists, $value['id'], $max_level, $curr_level + 1);
-                if (!empty($child)) {
+                if (!empty($child))
+                {
                     $value['children'] = $child;
                 }
                 $trees[] = $value;
@@ -134,8 +149,10 @@ class Common
     function unique(&$arr, $key)
     {
         $rAr = [];
-        for ($i = 0; $i < count($arr); $i++) {
-            if (!isset($rAr[$arr[$i][$key]])) {
+        for ($i = 0; $i < count($arr); $i++)
+        {
+            if (!isset($rAr[$arr[$i][$key]]))
+            {
                 $rAr[$arr[$i][$key]] = $arr[$i];
             }
         }
@@ -152,12 +169,16 @@ class Common
     function getCols($arr, $col)
     {
         $ret = [];
-        foreach ($arr as $row) {
-            if (is_array($row)) {
-                if (isset($row[$col])) {
+        foreach ($arr as $row)
+        {
+            if (is_array($row))
+            {
+                if (isset($row[$col]))
+                {
                     $ret[] = $row[$col];
                 }
-            } else {
+            } else
+            {
                 $ret = [$col => $arr[$col]];
             }
         }
@@ -173,7 +194,8 @@ class Common
     function groupBy($arr, $keyField)
     {
         $ret = [];
-        foreach ($arr as $row) {
+        foreach ($arr as $row)
+        {
             $key = $row[$keyField];
             $ret[$key][] = $row;
         }
@@ -187,14 +209,19 @@ class Common
      */
     function removeEmpty(& $arr, $trim = TRUE)
     {
-        foreach ($arr as $key => $value) {
-            if (is_array($value)) {
+        foreach ($arr as $key => $value)
+        {
+            if (is_array($value))
+            {
                 $this->removeEmpty($arr[$key]);
-            } else {
+            } else
+            {
                 $value = trim($value); //移除字符串两侧的字符
-                if ($value == '') {
+                if ($value == '')
+                {
                     unset($arr[$key]);
-                } elseif ($trim) {
+                } elseif ($trim)
+                {
                     $arr[$key] = $value;
                 }
             }
@@ -208,13 +235,17 @@ class Common
      */
     function getArrayLevel($arr)
     {
-        if (!is_array($arr)) {
+        if (!is_array($arr))
+        {
             return 0;
-        } else {
+        } else
+        {
             $max = 0;
-            foreach ($arr as $v) {
+            foreach ($arr as $v)
+            {
                 $ret = $this->getArrayLevel($v);
-                if ($ret > $max) {
+                if ($ret > $max)
+                {
                     $max = $ret;
                 }
             }
@@ -236,13 +267,18 @@ class Common
     {
         $method = strtoupper($method);
         $ch = curl_init();
-        if ('GET' == $method) {
-            if ($data) {
-                if (strpos($uri, '?')) {
-                    foreach ($data as $key => $item) {
+        if ('GET' == $method)
+        {
+            if ($data)
+            {
+                if (strpos($uri, '?'))
+                {
+                    foreach ($data as $key => $item)
+                    {
                         $uri .= "&{$key}={$item}";
                     }
-                } else {
+                } else
+                {
                     $uri .= '?' . urldecode(http_build_query($data));
                 }
             }
@@ -251,7 +287,8 @@ class Common
         $params[CURLOPT_RETURNTRANSFER] = 1;
         $params[CURLOPT_SSL_VERIFYPEER] = false;
         $params[CURLOPT_SSL_VERIFYHOST] = false;
-        if ($method == 'POST') {
+        if ($method == 'POST')
+        {
             $params[CURLOPT_POST] = 1;
             $params[CURLOPT_POSTFIELDS] = $data;
         }
@@ -259,18 +296,21 @@ class Common
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        if ($method == 'POST') {
+        if ($method == 'POST')
+        {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? urldecode(http_build_query($data)) : $data);
         }
-        if ($secret && $key) {
+        if ($secret && $key)
+        {
             $params[CURLOPT_SSLCERTTYPE] = 'PEM';
             $params[CURLOPT_SSLCERT] = $secret;
             $params[CURLOPT_SSLKEYTYPE] = 'PEM';
             $params[CURLOPT_SSLKEY] = $key;
         }
         curl_setopt_array($ch, $params);
-        if (curl_errno($ch)) {
+        if (curl_errno($ch))
+        {
             throw new \Exception(curl_error($ch));
         }
         $response = curl_exec($ch);
@@ -320,8 +360,10 @@ class Common
             '60' => '分钟',
             '1' => '秒'
         ];
-        foreach ($f as $k => $v) {
-            if (0 != $c = floor($t / (int)$k)) {
+        foreach ($f as $k => $v)
+        {
+            if (0 != $c = floor($t / (int)$k))
+            {
                 return $c . $v . '前';
             }
         }
