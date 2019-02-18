@@ -13,3 +13,4 @@
 * curl请求Api接口  requestApi 
 * 由经纬度算距离  getDistance 
 * php将时间处理成“xx时间前”  formatTime 
+* 二维数组根据多个字段排序 sortArrByManyField
