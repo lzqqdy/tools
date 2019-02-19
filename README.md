@@ -14,3 +14,7 @@
 * 由经纬度算距离  getDistance 
 * php将时间处理成“xx时间前”  formatTime 
 * 二维数组根据多个字段排序 sortArrByManyField
+* 获取用户IP地址 getIp
+* 将字符串分割为数组 mb_str_split
+* 生成不重复的随机数 get_rand_number
+* 按符号截取字符串的指定部分 cut_str
