@@ -514,7 +514,36 @@ class Common
             }
         }
     }
-    public function test(){
-        
+
+    /**
+     * 获取二维数组中的某一列
+     * @param array $data 数组
+     * @param string $key  列名
+     * @return array  返回那一列的数组
+     */
+    function get_arr_column($data, $key)
+    {
+        $arr = [];
+        foreach($data as $key => $val){
+            $arr[] = $val[$key];
+        }
+        return $arr;
+    }
+
+    /**
+     * 多维数组转化为一维数组
+     * @param array $data 多维数组
+     * @return array 一维数组
+     */
+    function array_multi2single($data)
+    {
+        $arr = [];
+        foreach ($data as $value) {
+            if (is_array($value)) {
+                $this->array_multi2single($value);
+            } else
+                $result_array [] = $value;
+        }
+        return $arr;
     }
 }
