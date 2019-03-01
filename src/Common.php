@@ -27,7 +27,7 @@ class Common
         array_multisort($fieldArr, $sort, $array);
         return $array;
     }
-    
+
     /**
      * 多维数组格式化日期
      *
@@ -56,7 +56,7 @@ class Common
         }
         return $return ? $return : $data;
     }
-    
+
     /**
      * 遍历文件夹获取文件树
      *
@@ -113,7 +113,7 @@ class Common
         }
         return $files;
     }
-    
+
     /**
      * 将数据集格式化成树形层次结构
      *
@@ -147,7 +147,7 @@ class Common
         }
         return $trees;
     }
-    
+
     /**
      * 二维数组根据键值去重
      *
@@ -169,7 +169,7 @@ class Common
         $arr = array_values($rAr);
         return $arr;
     }
-    
+
     /**
      * 获取指定键所有值的数组
      *
@@ -196,7 +196,7 @@ class Common
         }
         return $ret;
     }
-    
+
     /**
      * 将一个二维数组按照指定字段的值分组
      *
@@ -215,7 +215,7 @@ class Common
         }
         return $ret;
     }
-    
+
     /**
      * 从数组中删除空白的元素（包括只有空白字符的元素）
      *
@@ -242,7 +242,7 @@ class Common
             }
         }
     }
-    
+
     /**
      * 返回数组层数(一维，二维..)
      *
@@ -269,7 +269,7 @@ class Common
             return $max + 1;
         }
     }
-    
+
     /**
      * curl请求Api接口
      *
@@ -311,7 +311,7 @@ class Common
             $params[CURLOPT_POST] = 1;
             $params[CURLOPT_POSTFIELDS] = $data;
         }
-        
+
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -336,7 +336,7 @@ class Common
         curl_close($ch);
         return $response;
     }
-    
+
     /**
      * 由经纬度算距离
      *
@@ -354,16 +354,16 @@ class Common
         $lng1 = ($lng1 * pi()) / 180;
         $lat2 = ($lat2 * pi()) / 180;
         $lng2 = ($lng2 * pi()) / 180;
-        
+
         $calcLongitude = $lng2 - $lng1;
         $calcLatitude = $lat2 - $lat1;
         $stepOne = pow(sin($calcLatitude / 2), 2) + cos($lat1) * cos($lat2) * pow(sin($calcLongitude / 2), 2);
         $stepTwo = 2 * asin(min(1, sqrt($stepOne)));
         $calculatedDistance = $earthRadius * $stepTwo;
-        
+
         return round($calculatedDistance);
     }
-    
+
     /**
      * php将时间处理成“xx时间前”
      *
@@ -391,7 +391,7 @@ class Common
             }
         }
     }
-    
+
     /**
      * 二维数组根据多个字段排序
      * 参数($arr, 'gender', SORT_DESC, 'age', SORT_ASC);
@@ -418,7 +418,7 @@ class Common
         call_user_func_array('array_multisort', $args);
         return array_pop($args);
     }
-    
+
     /**
      * 获取用户IP地址
      * @return mixed
@@ -437,7 +437,7 @@ class Common
         }
         return $ip;
     }
-    
+
     /**
      * 将字符串分割为数组
      *
@@ -449,7 +449,7 @@ class Common
     {
         return preg_split('/(?<!^)(?!$)/u', $str);
     }
-    
+
     /**
      * 生成不重复的随机数
      *
@@ -518,13 +518,14 @@ class Common
     /**
      * 获取二维数组中的某一列
      * @param array $data 数组
-     * @param string $key  列名
+     * @param string $key 列名
      * @return array  返回那一列的数组
      */
     function get_arr_column($data, $key)
     {
         $arr = [];
-        foreach($data as $key => $val){
+        foreach ($data as $key => $val)
+        {
             $arr[] = $val[$key];
         }
         return $arr;
@@ -538,8 +539,10 @@ class Common
     function array_multi2single($data)
     {
         $arr = [];
-        foreach ($data as $value) {
-            if (is_array($value)) {
+        foreach ($data as $value)
+        {
+            if (is_array($value))
+            {
                 $this->array_multi2single($value);
             } else
                 $result_array [] = $value;
