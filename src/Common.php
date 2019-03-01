@@ -514,4 +514,7 @@ class Common
             }
         }
     }
+    public function test(){
+        
+    }
 }
