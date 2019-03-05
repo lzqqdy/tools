@@ -20,3 +20,4 @@
 * 按符号截取字符串的指定部分 cut_str
 * 获取二维数组中的某一列 get_arr_column
 * 多维数组转化为一维数组 array_multi2single
+* 获取服务器ip地址 serverIP

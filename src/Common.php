@@ -549,4 +549,13 @@ class Common
         }
         return $arr;
     }
+
+    /**
+     * 获取服务器ip地址
+     * @return string
+     */
+    function serverIP()
+    {
+        return gethostbyname($_SERVER["SERVER_NAME"]);
+    }
 }
