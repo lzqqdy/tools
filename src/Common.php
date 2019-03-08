@@ -89,11 +89,11 @@ class Common
             if (is_dir($file))
             {
                 $files[] = [
-                    'id' => $id,
-                    'pId' => $key,
-                    'label' => $filename,
+                    'id'       => $id,
+                    'pId'      => $key,
+                    'label'    => $filename,
                     'isParent' => 1,
-                    'path' => $path,
+                    'path'     => $path,
                 ];
                 $temp = $this->getFilesTree($file, $id);
                 if (is_array($temp))
@@ -103,11 +103,11 @@ class Common
             } else
             {
                 $files[] = [
-                    'id' => $id,
-                    'pId' => $key,
-                    'label' => $filename,
+                    'id'       => $id,
+                    'pId'      => $key,
+                    'label'    => $filename,
                     'isParent' => 0,
-                    'path' => $path,
+                    'path'     => $path,
                 ];
             }
         }
@@ -376,12 +376,12 @@ class Common
         $t = time() - $time;
         $f = [
             '31536000' => '年',
-            '2592000' => '个月',
-            '604800' => '星期',
-            '86400' => '天',
-            '3600' => '小时',
-            '60' => '分钟',
-            '1' => '秒'
+            '2592000'  => '个月',
+            '604800'   => '星期',
+            '86400'    => '天',
+            '3600'     => '小时',
+            '60'       => '分钟',
+            '1'        => '秒',
         ];
         foreach ($f as $k => $v)
         {

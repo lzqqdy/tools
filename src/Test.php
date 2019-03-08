@@ -20,7 +20,8 @@ class Test
      * @param $param
      * @return mixed
      */
-    public function change($param){
+    public function change($param)
+    {
         return $param;
     }
 }
