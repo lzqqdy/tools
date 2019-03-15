@@ -22,3 +22,4 @@
 * 多维数组转化为一维数组 array_multi2single
 * 获取服务器ip地址 serverIP
 * 格式化字节 formatBytes
+* 生成随机颜色 randomColor
