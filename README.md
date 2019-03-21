@@ -23,3 +23,4 @@
 * 获取服务器ip地址 serverIP
 * 格式化字节 formatBytes
 * 生成随机颜色 randomColor
+* 将一维数组解析成键值相同的数组 parseArr

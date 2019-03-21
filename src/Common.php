@@ -617,4 +617,19 @@ class Common
         }
         return $str;
     }
+
+    /**
+     * 将一维数组解析成键值相同的数组
+     * @param $arr
+     * @return array
+     */
+    function parseArr($arr)
+    {
+        $result = [];
+        foreach ($arr as $item)
+        {
+            $result[$item] = $item;
+        }
+        return $result;
+    }
 }
