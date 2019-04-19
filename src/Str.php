@@ -177,7 +177,7 @@ class Str
      * @param $zh
      * @return string
      */
-    function pinyin_long($zh)
+    public static function  pinyin_long($zh)
     {
         $ret = "";
         $s1 = iconv("UTF-8", "gb2312", $zh);
