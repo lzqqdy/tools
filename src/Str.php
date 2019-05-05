@@ -177,7 +177,7 @@ class Str
      * @param $zh
      * @return string
      */
-    public static function  pinyin_long($zh)
+    public static function pinyin_long($zh)
     {
         $ret = "";
         $s1 = iconv("UTF-8", "gb2312", $zh);
@@ -200,5 +200,87 @@ class Str
             }
         }
         return $ret;
+    }
+
+    /**
+     * 截取字符串长度
+     *
+     * @param string $sourcestr 要被截取的字符串
+     * @param int $cutlength 截取的长度
+     * @return string
+     */
+    public static function cutStr($sourcestr, $cutlength)
+    {
+        $sourcestr = self::replaceHtml($sourcestr);
+        $returnstr = "";
+        $i = 0;
+        $n = 0;
+        $str_length = strlen($sourcestr);
+        // 字符串的字节数
+        while (($n < $cutlength) and ($i <= $str_length))
+        {
+            $temp_str = substr($sourcestr, $i, 1);
+            $ascnum = Ord($temp_str);
+            // 得到字符串中第$i位字符的ascii码
+            // 如果ASCII位高与224，
+            if ($ascnum >= 224)
+            {
+                $returnstr .= substr($sourcestr, $i, 3);
+                // 根据UTF-8编码规范，将3个连续的字符计为单个字符
+                $i = $i + 3;
+                // 实际Byte计为3
+                $n++; // 字串长度计1
+                // 如果ASCII位高与192，
+            } elseif ($ascnum >= 192)
+            {
+                $returnstr = $returnstr . substr($sourcestr, $i, 2);
+                // 根据UTF-8编码规范，将2个连续的字符计为单个字符
+                $i = $i + 2;
+                // 实际Byte计为2
+                $n++; // 字串长度计1
+                // 如果是大写字母，
+            } elseif ($ascnum >= 65 && $ascnum <= 90)
+            {
+                $returnstr = $returnstr . substr($sourcestr, $i, 1);
+                $i = $i + 1;
+                // 实际的Byte数仍计1个
+                $n++; // 但考虑整体美观，大写字母计成一个高位字符
+            } else
+            { // 其他情况下，包括小写字母和半角标点符号，
+                $returnstr = $returnstr . substr($sourcestr, $i, 1);
+                $i = $i + 1;
+                // 实际的Byte数计1个
+                $n = $n + 0.5; // 小写字母和半角标点等与半个高位字符宽…
+            }
+        }
+        if ($str_length > $i)
+        {
+            $returnstr .= "...";
+            // 超过长度时在尾处加上省略号
+        }
+        return $returnstr;
+    }
+
+    /**
+     * 去除字符串中的HTML JS CSS
+     *
+     * @param string $string 需要处理的字符串
+     * @return string 纯文本字符串
+     */
+    public static function replaceHtml($string)
+    {
+        if (empty ($string))
+        {
+            return "";
+        }
+        $search = [
+            "'<script[^>]*?>.*?</script>'si",
+            "'<style[^>]*?>.*?</style>'si",
+            "'<[/!]*?[^<>]*?>'si",
+            "'<!--[/!]*?[^<>]*?>'si",
+        ];
+        $replace = ["", "", "", ""];
+        $string = preg_replace($search, $replace, $string);
+        return str_replace(["　", " ", "\r", "\n", "&nbsp;"], "", $string);
     }
 }
