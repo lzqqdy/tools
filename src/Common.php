@@ -4,7 +4,8 @@ namespace lzqqdy\tools;
 /**
  * Class Common
  * @package lzqqdy\tools
- * @describe 常用方法收集
+ * @describe 方法合集
+ * 具体调用按照分类文件
  */
 class Common
 {
