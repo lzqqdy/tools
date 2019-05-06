@@ -2,6 +2,7 @@ tools
 ===============
 ### 常用方法合集(持续更新中)
 搜集平时项目中常用的方法，备份日后使用
+#### Common.php
 * 多维数组按照某字段排序  sortArrByOneField  
 * 多维数组格式化日期  formatDate 
 * 遍历文件夹获取文件树  getFilesTree 
@@ -25,3 +26,19 @@ tools
 * 格式化字节 formatBytes
 * 生成随机颜色 randomColor
 * 将一维数组解析成键值相同的数组 parseArr
+#### Arr.php 
+数组处理
+#### File.php 
+文件处理：文件遍历，文件&文件夹操作
+#### Http.php 
+HTTP请求（get/post）
+#### Random.php 
+随机生成
+#### Str.php 
+字符串处理
+#### Time.php 
+时间处理
+#### Tree.php 
+数据集处理
+#### Other.php 
+其他方法
