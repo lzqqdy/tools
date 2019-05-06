@@ -283,4 +283,32 @@ class Str
         $string = preg_replace($search, $replace, $string);
         return str_replace(["　", " ", "\r", "\n", "&nbsp;"], "", $string);
     }
+
+    /**
+     * 删除指定标签
+     *
+     * @param array $tags 删除的标签  数组形式
+     * @param string $str html字符串
+     * @param bool $content true保留标签的内容text
+     * @return mixed
+     */
+    public static function strip_html_tags($tags, $str, $content = true)
+    {
+        $html = [];
+        // 是否保留标签内的text字符
+        if ($content)
+        {
+            foreach ($tags as $tag)
+            {
+                $html[] = '/(<' . $tag . '.*?>(.|\n)*?<\/' . $tag . '>)/is';
+            }
+        } else
+        {
+            foreach ($tags as $tag)
+            {
+                $html[] = '/(<(?:\\/' . $tag . '|' . $tag . ')[^>]*>)/is';
+            }
+        }
+        return preg_replace($html, '', $str);
+    }
 }

@@ -524,7 +524,7 @@ class Common
     function get_arr_column($data, $key)
     {
         $arr = [];
-        foreach ($data as $key => $val)
+        foreach ($data as $k => $val)
         {
             $arr[] = $val[$key];
         }
