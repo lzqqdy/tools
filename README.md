@@ -26,6 +26,8 @@ tools
 * 格式化字节 formatBytes
 * 生成随机颜色 randomColor
 * 将一维数组解析成键值相同的数组 parseArr
+* 获取本周所有日期 get_week
+* 获取最近七天所有日期 get_weeks
 #### Arr.php 
 数组处理
 #### File.php 

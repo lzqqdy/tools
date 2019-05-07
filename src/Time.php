@@ -35,4 +35,41 @@ class Time
             }
         }
     }
+
+    /**
+     * 获取本周所有日期
+     * @param string $time
+     * @param string $format
+     * @return array
+     */
+    public static function get_week($time = '', $format = 'Y-m-d')
+    {
+        $time = $time != '' ? $time : time();
+        //获取当前周几
+        $week = date('w', $time);
+        $date = [];
+        for ($i = 1; $i <= 7; $i++)
+        {
+            $date[$i] = date($format, strtotime('+' . $i - $week . ' days', $time));
+        }
+        return $date;
+    }
+
+    /**
+     * 获取最近七天所有日期
+     * @param string $time
+     * @param string $format
+     * @return array
+     */
+    public static function get_weeks($time = '', $format = 'Y-m-d')
+    {
+        $time = $time != '' ? $time : time();
+        //组合数据
+        $date = [];
+        for ($i = 1; $i <= 7; $i++)
+        {
+            $date[$i] = date($format, strtotime('+' . $i - 7 . ' days', $time));
+        }
+        return $date;
+    }
 }
