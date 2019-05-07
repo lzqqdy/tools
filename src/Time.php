@@ -3,11 +3,12 @@
 namespace lzqqdy\tools;
 /**
  * 时间处理
- * Class Str
+ * Class Time
  * @package lzqqdy\tools
  */
 class Time
 {
+
     /**
      * php将时间处理成“xx时间前”
      *

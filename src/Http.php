@@ -3,7 +3,7 @@
 namespace lzqqdy\tools;
 /**
  * HTTP请求
- * Class Str
+ * Class Http
  * @package lzqqdy\tools
  */
 class Http

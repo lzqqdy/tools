@@ -3,7 +3,7 @@
 namespace lzqqdy\tools;
 /**
  * 其他函数
- * Class Str
+ * Class Other
  * @package lzqqdy\tools
  */
 class Other

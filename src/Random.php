@@ -3,7 +3,7 @@
 namespace lzqqdy\tools;
 /**
  * 随机
- * Class Str
+ * Class Random
  * @package lzqqdy\tools
  */
 class Random
