@@ -3,11 +3,27 @@
 namespace lzqqdy\tools;
 /**
  * 文件处理类
- * Class Files
+ * Class File
  * @package lzqqdy\tools
  */
 class File
 {
+    /**
+     * 检查文件是否可读
+     *
+     * @param $filename
+     * @return bool
+     */
+    public static function isReadable($filename)
+    {
+        if (!$fh = @fopen($filename, 'r', true))
+        {
+            return false;
+        }
+        @fclose($fh);
+        return true;
+    }
+
     /**
      * 遍历文件夹获取文件树
      *
@@ -224,7 +240,7 @@ class File
     /**
      * 列出目录
      * @param $dir string 目录名
-     * @return  目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
+     * @return  array 目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
      */
     public static function get_dirs($dir)
     {
@@ -292,8 +308,8 @@ class File
      * @param $name string 文件名
      * @param $value string 文件内容,为空则获取缓存
      * @param $path  string 文件所在目录,默认是当前应用的DATA目录
-     * @param $cached  是否缓存结果,默认缓存
-     * @return 返回缓存内容
+     * @param  bool $cached 是否缓存结果,默认缓存
+     * @return array|bool|int|mixed|string 返回缓存内容
      */
     public static function cache($name, $value = '', $path = DATA_PATH, $cached = true)
     {
