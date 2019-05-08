@@ -44,3 +44,5 @@ HTTP请求（get/post）
 数据集处理
 #### Other.php 
 其他方法
+#### WeChat.php 
+小程序常用接口
