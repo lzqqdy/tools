@@ -5,6 +5,9 @@ namespace lzqqdy\tools;
  * Class Test
  * @package lzqqdy\tools
  */
+
+use lzqqdy\tools\WeChat;
+
 class Test
 {
     /**
@@ -24,4 +27,5 @@ class Test
     {
         return $param;
     }
+    
 }
