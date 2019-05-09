@@ -42,6 +42,67 @@ class WeChat
         $result = Http::get($url);
         if ($result)
         {
+            $result = json_decode($result, true);
+            if (!$result || !empty($result['errcode']))
+            {
+                $errCode = $result['errcode'];
+                $errMsg = $result['errmsg'];
+                $this->setError(compact('errCode', 'errMsg'));
+                return false;
+            }
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * 获取AccessToken
+     * @param $is_save bool 是否保存到本地,不保存则不判断是否过期
+     * @param $path string 保存路径
+     * @param $filename string 文件名
+     * @return bool
+     */
+    public function getAccessToken($is_save = false, $path = './', $filename = 'access_token.json')
+    {
+        if ($is_save === false)
+        {
+            $result = $this->getToken(); //获取token
+            if (!$result)
+            {
+                $this->getError();
+            }
+            return $result;
+        } else
+        {
+            $isExpires = self::isExpires($path, $filename);
+            if ($isExpires === false)
+            {
+                $result = $this->getToken(); //获取token
+                if ($result)
+                {
+                    $result['time'] = time();
+                    file_put_contents($path . $filename, json_encode($result));
+                } else
+                {
+                    $this->getError();
+                }
+                return $result;
+            } else
+            {
+                return $isExpires;
+            }
+        }
+    }
+
+    /**
+     * 获取token
+     * @return bool|mixed
+     */
+    public function getToken()
+    {
+        $result = Http::get(self::API_URL_PREFIX . self::AUTH_URL . 'appid=' . $this->appid . '&secret=' . $this->appsecret);
+        if ($result)
+        {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode']))
             {
@@ -49,45 +110,13 @@ class WeChat
                 $errMsg = $json['errmsg'];
                 $this->setError(compact('errCode', 'errMsg'));
                 return false;
+            } else
+            {
+                $this->access_token = $json;
+                return $this->access_token;
             }
-            return $json;
         }
         return false;
-    }
-
-    /**
-     * 获取AccessToken并保存本地
-     * @return bool|array|string
-     */
-    public function getAccessToken()
-    {
-        //todo 灵活定义保存名称和路径
-        $isExpires = self::isExpires();
-        if ($isExpires === false)
-        {
-            $result = Http::get(self::API_URL_PREFIX . self::AUTH_URL . 'appid=' . $this->appid . '&secret=' . $this->appsecret);
-            if ($result)
-            {
-                $json = json_decode($result, true);
-                if (!$json || !empty($json['errcode']))
-                {
-                    $errCode = $json['errcode'];
-                    $errMsg = $json['errmsg'];
-                    $this->setError(compact('errCode', 'errMsg'));
-                    return false;
-                } else
-                {
-                    $json['time'] = time();
-                    file_put_contents('./access_token.json', json_encode($json));
-                    $this->access_token = $json['access_token'];
-                    return $this->access_token;
-                }
-            }
-            return false;
-        } else
-        {
-            return $isExpires;
-        }
     }
 
     /**
@@ -131,8 +160,8 @@ class WeChat
         $result = Http::post($url, json_encode($data));
         if ($this->json_validate($result))
         {
-            $json = json_decode($result, true);
-            return $json;
+            $result = json_decode($result, true);
+            return $result;
         } else
         {
             return $result;
@@ -148,7 +177,7 @@ class WeChat
     public function writeImg($string, $dir, $name)
     {
         File::mk_dir($dir);
-        $files = $dir . '/' . $name;
+        $files = $dir . $name;
         $file = fopen($files, "w");
         fwrite($file, $string);
         fclose($file);
@@ -156,20 +185,22 @@ class WeChat
 
     /**
      * 判断AccessToken过期
-     * @return bool
+     * @param $path
+     * @param $filename
+     * @return bool|mixed
      */
-    public function isExpires()
+    public function isExpires($path, $filename)
     {
-        if (!file_exists('./access_token.json'))
+        if (!file_exists($path . $filename))
         {
             return false;
         }
-        $res = file_get_contents('./access_token.json');
+        $res = file_get_contents($path . $filename);
         $arr = json_decode($res, true);
         if ($arr && time() < (intval($arr['time']) + intval($arr['expires_in'])))
         {
             //未过期
-            return $arr['access_token'];
+            return $arr;
         } else
         {
             return false;
@@ -204,10 +235,10 @@ class WeChat
 
     /**
      * 获取错误信息
-     * @return array
+     * @return array|bool
      */
     public function getError()
     {
-        return $this->error ? $this->error : [];
+        return $this->error ? $this->error : false;
     }
 }

@@ -40,7 +40,7 @@ class Test
         $WeChat = new WeChat($config);
         $code = '033GlfVT1pPX25198PTT1EgvVT1GlfVJ';
         $login = $WeChat->wxLogin($code);  //登录
-        $token = $WeChat->getAccessToken(); //获取token
+        $token = $WeChat->getAccessToken(); //获取token,默认不保存
         $path = 'pages/index/index'; //小程序页面路径
         $data = [       //参数
             'path'  => $path . '?key=' . 1,
@@ -49,8 +49,8 @@ class Test
         $ret = $WeChat->getQRCode($token, $data); //生成二维码
         if ($ret)
         {
-            $WeChat->writeImg($ret, 'img', 'test.png'); //二维码写入本地
-//             var_dump($ret);
+//            $WeChat->writeImg($ret, './', 'test.png'); //二维码写入本地
+             var_dump($ret);
         } else
         {
             var_dump($WeChat->getError()); //获取错误信息
