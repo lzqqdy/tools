@@ -98,7 +98,7 @@ class WeChat
      * 获取token
      * @return bool|mixed
      */
-    public function getToken()
+    private function getToken()
     {
         $result = Http::get(self::API_URL_PREFIX . self::AUTH_URL . 'appid=' . $this->appid . '&secret=' . $this->appsecret);
         if ($result)
@@ -151,7 +151,7 @@ class WeChat
      * @param array $param
      * @return mixed|string
      */
-    protected function getWxQRCode($token = '', $url = '', $param = [])
+    private function getWxQRCode($token = '', $url = '', $param = [])
     {
         $data = ['access_token' => $token];
         $data = array_merge($data, $param);
@@ -189,7 +189,7 @@ class WeChat
      * @param $filename
      * @return bool|mixed
      */
-    public function isExpires($path, $filename)
+    private function isExpires($path, $filename)
     {
         if (!file_exists($path . $filename))
         {
@@ -212,7 +212,7 @@ class WeChat
      * @param $string
      * @return bool
      */
-    protected function json_validate($string)
+    private function json_validate($string)
     {
         if (is_string($string))
         {
