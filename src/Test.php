@@ -46,11 +46,11 @@ class Test
             'path'  => $path . '?key=' . 1,
             'width' => 430,
         ];
-        $ret = $WeChat->getQRCode($token, $data); //生成二维码
+        $ret = $WeChat->getQRCode($token['access_token'], $data); //生成二维码
         if ($ret)
         {
 //            $WeChat->writeImg($ret, './', 'test.png'); //二维码写入本地
-             var_dump($ret);
+            var_dump($ret);
         } else
         {
             var_dump($WeChat->getError()); //获取错误信息

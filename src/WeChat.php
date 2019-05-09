@@ -153,11 +153,9 @@ class WeChat
      */
     private function getWxQRCode($token = '', $url = '', $param = [])
     {
-        $data = ['access_token' => $token];
-        $data = array_merge($data, $param);
         // 获取数据
         $url = $url . 'access_token=' . $token;
-        $result = Http::post($url, json_encode($data));
+        $result = Http::post($url, json_encode($param));
         if ($this->json_validate($result))
         {
             $result = json_decode($result, true);
