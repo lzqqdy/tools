@@ -2,7 +2,7 @@ tools
 ===============
 ### 常用方法合集(持续更新中)
 搜集平时项目中常用的方法，备份日后使用
-#### Common.php
+#### All.php
 * 多维数组按照某字段排序  sortArrByOneField  
 * 多维数组格式化日期  formatDate 
 * 遍历文件夹获取文件树  getFilesTree 
