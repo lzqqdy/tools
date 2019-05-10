@@ -23,7 +23,7 @@ class Tree
         'pid'   => 'pid',   // pid名称
         'title' => 'title', // 标题名称
         'child' => 'child', // 子元素键名
-        'html'  => '┝ ',   // 层级标记
+        'html'  => '┝ ',    // 层级标记
         'step'  => 4,       // 层级步进数量
     ];
 

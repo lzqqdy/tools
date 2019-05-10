@@ -25,6 +25,11 @@ class WeChat
     private $access_token;
     protected $error = [];
 
+    /**
+     * 获取配置
+     * WeChat constructor.
+     * @param $options
+     */
     public function __construct($options)
     {
         $this->appid = isset($options['appid']) ? $options['appid'] : '';
