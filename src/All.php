@@ -7,7 +7,7 @@ namespace lzqqdy\tools;
  * @describe 方法合集
  * 具体调用按照分类文件
  */
-class Common
+class All
 {
     /**
      * 多维数组按照某字段排序
