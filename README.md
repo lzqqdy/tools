@@ -1,8 +1,13 @@
-tools
+# tools
 ===============
-### 常用方法合集(持续更新中)
-搜集平时项目中常用的方法，备份日后使用
-#### All.php
+### 常用方法合集
+> 更新完善中
+
+> 搜集平时项目中常用的方法，备份日后使用
+#### 安装
+> composer require lzqqdy/tools
+### [All.php](https://github.com/lzqqdy/tools/blob/master/src/All.php) 
+```
 * 多维数组按照某字段排序  sortArrByOneField  
 * 多维数组格式化日期  formatDate 
 * 遍历文件夹获取文件树  getFilesTree 
@@ -28,23 +33,25 @@ tools
 * 将一维数组解析成键值相同的数组 parseArr
 * 获取本周所有日期 get_week
 * 获取最近七天所有日期 get_weeks
-#### Arr.php 
-数组处理
-#### File.php 
-文件处理：文件遍历，文件&文件夹操作
-#### Http.php 
-HTTP请求（get/post）
-#### Random.php 
-随机生成
-#### Str.php 
-字符串处理
-#### Time.php 
-时间处理
-#### Tree.php 
-数据集处理
-#### Other.php 
-其他方法
-#### WeChat.php 
-小程序常用接口
-#### Algorithm.php
-php实现基础算法
+* ......
+```
+### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)
+> 数组处理
+### [File.php](https://github.com/lzqqdy/tools/blob/master/src/File.php)
+> 文件处理：文件遍历，文件&文件夹操作
+### [Http.php](https://github.com/lzqqdy/tools/blob/master/src/Http.php) 
+> HTTP请求（get/post）
+### [Random.php](https://github.com/lzqqdy/tools/blob/master/src/Random.php)
+> 随机生成
+### [Str.php](https://github.com/lzqqdy/tools/blob/master/src/Str.php) 
+> 字符串处理
+### [Time.php](https://github.com/lzqqdy/tools/blob/master/src/Time.php) 
+> 时间处理
+### [Tree.php](https://github.com/lzqqdy/tools/blob/master/src/Tree.php) 
+> 数据集处理
+### [Other.php](https://github.com/lzqqdy/tools/blob/master/src/Other.php) 
+> 其他方法
+### [WeChat.php](https://github.com/lzqqdy/tools/blob/master/src/WeChat.php) 
+> 小程序常用接口
+### [Algorithm.php](https://github.com/lzqqdy/tools/blob/master/src/Algorithm.php)
+> PHP实现基础算法
