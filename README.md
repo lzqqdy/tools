@@ -46,3 +46,5 @@ HTTP请求（get/post）
 其他方法
 #### WeChat.php 
 小程序常用接口
+#### Algorithm.php
+php实现基础算法

@@ -258,4 +258,21 @@ class Arr
         }
         return $return ? $return : $data;
     }
+
+    /**
+     * 返回数组中某字段最大的一列
+     * @param $data
+     * @param string $field
+     * @return mixed
+     */
+    function getMaxArr($data, $field = '')
+    {
+        return $max = array_reduce($data, function ($curr, $item) use ($field) {
+            if (is_array($curr))
+                return $curr[$field] < $item[$field] ? $item : $curr;
+            else
+                return $curr < $item ? $item : $curr;
+        });
+    }
+
 }
