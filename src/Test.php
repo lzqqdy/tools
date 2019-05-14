@@ -2,7 +2,7 @@
 
 namespace lzqqdy\tools;
 /**
- * Class Test
+ * 方法调用测试
  * @package lzqqdy\tools
  */
 

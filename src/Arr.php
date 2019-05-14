@@ -260,19 +260,23 @@ class Arr
     }
 
     /**
-     * 返回数组中某字段最大的一列
-     * @param $data
-     * @param string $field
-     * @return mixed
+     * 一维数组转二维
+     * @param $array
+     * @param bool $recursive
+     * @param string $key
+     * @param string $value
+     * @return array
      */
-    function getMaxArr($data, $field = '')
+    public static function toMapping($array, $recursive = false, $key = 'name', $value = 'value')
     {
-        return $max = array_reduce($data, function ($curr, $item) use ($field) {
-            if (is_array($curr))
-                return $curr[$field] < $item[$field] ? $item : $curr;
-            else
-                return $curr < $item ? $item : $curr;
-        });
+        foreach ($array as $index => $obj)
+        {
+            $array[$index] = [
+                $key   => $index,
+                $value => is_array($obj) && $recursive
+                    ? static::toMapping($obj, $recursive) : $obj,
+            ];
+        }
+        return array_values($array);
     }
-
 }
