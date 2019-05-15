@@ -33,6 +33,7 @@
 * 将一维数组解析成键值相同的数组 parseArr
 * 获取本周所有日期 get_week
 * 获取最近七天所有日期 get_weeks
+* 一维数组转二维 toMapping
 * ......
 ```
 ### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)

@@ -670,4 +670,24 @@ class All
         }
         return $date;
     }
+    /**
+     * 一维数组转二维
+     * @param $array
+     * @param bool $recursive
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    public function toMapping($array, $recursive = false, $key = 'name', $value = 'value')
+    {
+        foreach ($array as $index => $obj)
+        {
+            $array[$index] = [
+                $key   => $index,
+                $value => is_array($obj) && $recursive
+                    ? static::toMapping($obj, $recursive) : $obj,
+            ];
+        }
+        return array_values($array);
+    }
 }
