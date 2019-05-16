@@ -279,4 +279,24 @@ class Arr
         }
         return array_values($array);
     }
+
+    /**
+     * 判断二维数组是否存在某键值对
+     * @param array $arr
+     * @param string $key
+     * @param string $value
+     * @return bool
+     */
+    public static function if_array($arr, $key, $value)
+    {
+        foreach ($arr as $val)
+        {
+            if ($val[$key] == $value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
