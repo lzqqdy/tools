@@ -2,7 +2,7 @@
 
 namespace lzqqdy\tools;
 /**
- * Class Common
+ * Class All
  * @package lzqqdy\tools
  * @describe 方法合集
  * 具体调用按照分类文件
