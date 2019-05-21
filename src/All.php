@@ -15,7 +15,7 @@ class All
      * @param array $array 数据源
      * @param string $field 字段
      * @param string $sort 排序规则
-     *
+     * $sort eg：SORT_ASC,SORT_DESC,不加引号
      * @return mixed
      */
     function sortArrByOneField(&$array, $field, $sort)
