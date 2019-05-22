@@ -311,4 +311,77 @@ class Str
         }
         return preg_replace($html, '', $str);
     }
+
+    /**
+     * 数字转大写（人民币）
+     * 只支持11位数，9位整数+2位小数
+     * @param $num
+     * @return mixed
+     */
+    public static function numRmb($num)
+    {
+        $array1 = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        $array2 = ['-1' => '角', '0' => '分', '1' => '元', '2' => '拾', '3' => '佰', '4' => '仟', '5' => '万', '6' => '', '7' => '', '8' => '', '9' => '亿'];
+        # 只允许输入2位小数
+        $data = explode('.', round($num, 2));
+        # 先来弄整数部分
+        $length = strlen($data[0]);
+        $rmb = '';
+        for ($i = 1; $i <= $length; $i++)
+        {
+            $num = $length - $i;
+            $k = substr($data[0], $i - 1, 1);
+            $m = substr($data[0], $i, 1);
+            # 判断是不是连续的零
+            $status = ($k == 0) ? true : false;
+            # 处理万级以上数
+            if ($num > 4)
+            {
+                if ($status == true)
+                {
+                    $rmb .= $array1[0];
+                } else
+                {
+                    $rmb .= $array1[$k] . $array2[$num + 1];
+                    # 千万级别的时候会重复出现万数
+                    if ($num != 8)
+                    {
+                        $rmb .= $array2[$num - 3];
+                    }
+                    if ($num == 7 || $num == 6 || $num == 5)
+                    {
+                        $rmb = str_replace('万', '', $rmb);
+                        $rmb .= '万';
+                    }
+                }
+                # 处理千级以下数
+            } else
+            {
+                if ($status == true)
+                {
+                    $rmb .= $array1[0];
+                } else
+                {
+                    $rmb .= $array1[$k] . $array2[$num + 1];
+                }
+            }
+        }
+        # 再弄小数部分
+        if (!empty($data[1]))
+        {
+            $length = strlen($data[1]);
+            for ($i = 0; $i < $length; $i++)
+            {
+                $k = substr($data[1], $i, 1);
+                $rmb .= $array1[$k] . $array2[$i - 1];
+            }
+        } else
+        {
+            $rmb .= '整';
+        }
+        # 要替换6个零，因为可能存在7个零的情况
+        $rmb = str_replace(['零零', '零零', '零零'], '零', $rmb);
+        # 兼容一些特殊情况
+        return str_replace(['零角', '零零'], '零', $rmb);
+    }
 }
