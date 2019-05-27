@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * php实现基础算法
  * Class Algorithm
@@ -26,12 +27,9 @@ class Algorithm
     public function bubble_sort_1($arr)
     {
         $n = count($arr);
-        for ($i = 0; $i < $n - 1; $i++)
-        {
-            for ($j = $i + 1; $j < $n; $j++)
-            {
-                if ($arr[$j] < $arr[$i])
-                {
+        for ($i = 0; $i < $n - 1; $i++) {
+            for ($j = $i + 1; $j < $n; $j++) {
+                if ($arr[$j] < $arr[$i]) {
                     $temp = $arr[$i];
                     $arr[$i] = $arr[$j];
                     $arr[$j] = $temp;
@@ -49,12 +47,9 @@ class Algorithm
     public function bubble_sort_2($arr)
     {
         $n = count($arr);
-        for ($i = 0; $i < $n - 1; $i++)
-        {
-            for ($j = 0; $j < $n - 1 - $i; $j++)
-            {
-                if ($arr[$j] > $arr[$j + 1])
-                {
+        for ($i = 0; $i < $n - 1; $i++) {
+            for ($j = 0; $j < $n - 1 - $i; $j++) {
+                if ($arr[$j] > $arr[$j + 1]) {
                     list($arr[$j], $arr[$j + 1]) = [$arr[$j + 1], $arr[$j]];
                 }
             }

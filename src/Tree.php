@@ -43,12 +43,10 @@ class Tree
      */
     public static function config($config = [])
     {
-        if (!empty($config))
-        {
+        if (!empty($config)) {
             $config = array_merge(self::$config, $config);
         }
-        if (is_null(self::$instance))
-        {
+        if (is_null(self::$instance)) {
             self::$instance = new static($config);
         }
         return self::$instance;
@@ -67,18 +65,14 @@ class Tree
     {
         $trees = [];
         $lists = array_values($lists);
-        foreach ($lists as $key => $value)
-        {
-            if ($value[self::$config['pid']] == $pid)
-            {
-                if ($max_level > 0 && $curr_level == $max_level)
-                {
+        foreach ($lists as $key => $value) {
+            if ($value[self::$config['pid']] == $pid) {
+                if ($max_level > 0 && $curr_level == $max_level) {
                     return $trees;
                 }
                 unset($lists[$key]);
                 $child = self::toLayer($lists, $value[self::$config['id']], $max_level, $curr_level + 1);
-                if (!empty($child))
-                {
+                if (!empty($child)) {
                     $value[self::$config['child']] = $child;
                 }
                 $trees[] = $value;
@@ -96,13 +90,10 @@ class Tree
      */
     public static function toList($lists = [], $pid = 0, $level = 0)
     {
-        if (is_array($lists))
-        {
+        if (is_array($lists)) {
             $trees = [];
-            foreach ($lists as $key => $value)
-            {
-                if ($value[self::$config['pid']] == $pid)
-                {
+            foreach ($lists as $key => $value) {
+                if ($value[self::$config['pid']] == $pid) {
                     $title_prefix = str_repeat("&nbsp;", $level * self::$config['step']) . self::$config['html'];
                     $value['level'] = $level + 1;
                     $value['title_prefix'] = $level == 0 ? '' : $title_prefix;
@@ -113,12 +104,9 @@ class Tree
                 }
             }
             return $trees;
-        } else
-        {
-            foreach ($lists as $key => $value)
-            {
-                if ($value[self::$config['pid']] == $pid && is_object($value))
-                {
+        } else {
+            foreach ($lists as $key => $value) {
+                if ($value[self::$config['pid']] == $pid && is_object($value)) {
                     $title_prefix = str_repeat("&nbsp;", $level * self::$config['step']) . self::$config['html'];
                     $value['level'] = $level + 1;
                     $value['title_prefix'] = $level == 0 ? '' : $title_prefix;
@@ -141,10 +129,8 @@ class Tree
     public static function getParents($lists = [], $id = '')
     {
         $trees = [];
-        foreach ($lists as $value)
-        {
-            if ($value[self::$config['id']] == $id)
-            {
+        foreach ($lists as $value) {
+            if ($value[self::$config['id']] == $id) {
                 $trees[] = $value;
                 $trees = array_merge(self::getParents($lists, $value[self::$config['pid']]), $trees);
             }
@@ -161,10 +147,8 @@ class Tree
     public static function getChildId($lists = [], $pid = '')
     {
         $result = [];
-        foreach ($lists as $value)
-        {
-            if ($value[self::$config['pid']] == $pid)
-            {
+        foreach ($lists as $value) {
+            if ($value[self::$config['pid']] == $pid) {
                 $result[] = $value[self::$config['id']];
                 $result = array_merge($result, self::getChildId($lists, $value[self::$config['id']]));
             }
@@ -181,10 +165,8 @@ class Tree
     public static function getChild($lists = [], $pid = '')
     {
         $result = [];
-        foreach ($lists as $value)
-        {
-            if ($value[self::$config['pid']] == $pid)
-            {
+        foreach ($lists as $value) {
+            if ($value[self::$config['pid']] == $pid) {
                 $result[] = $value;
                 $result = array_merge($result, self::getChild($lists, $value[self::$config['id']]));
             }

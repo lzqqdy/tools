@@ -1,18 +1,18 @@
 {
-    "name": "lzqqdy/tools",
-    "description": "tools",
-    "authors": [
-        {
-            "name": "lzqqdy"
-        }
-    ],
-    "license": "MIT",
-    "require": {
-        "php": ">=7.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "lzqqdy\\tools\\": "src/"
-        }
+  "name": "lzqqdy/tools",
+  "description": "tools",
+  "authors": [
+    {
+      "name": "lzqqdy"
     }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "lzqqdy\\tools\\": "src/"
+    }
+  }
 }

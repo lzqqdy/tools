@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * 数组处理
  * Class Arr
@@ -20,8 +21,7 @@ class Arr
     public static function sortArrByOneField(&$array, $field, $sort)
     {
         $fieldArr = [];
-        foreach ($array as $k => $v)
-        {
+        foreach ($array as $k => $v) {
             $fieldArr[$k] = $v[$field];
         }
         array_multisort($fieldArr, $sort, $array);
@@ -39,10 +39,8 @@ class Arr
     public static function unique(&$arr, $key)
     {
         $rAr = [];
-        for ($i = 0; $i < count($arr); $i++)
-        {
-            if (!isset($rAr[$arr[$i][$key]]))
-            {
+        for ($i = 0; $i < count($arr); $i++) {
+            if (!isset($rAr[$arr[$i][$key]])) {
                 $rAr[$arr[$i][$key]] = $arr[$i];
             }
         }
@@ -61,16 +59,12 @@ class Arr
     public static function getCols($arr, $col)
     {
         $ret = [];
-        foreach ($arr as $row)
-        {
-            if (is_array($row))
-            {
-                if (isset($row[$col]))
-                {
+        foreach ($arr as $row) {
+            if (is_array($row)) {
+                if (isset($row[$col])) {
                     $ret[] = $row[$col];
                 }
-            } else
-            {
+            } else {
                 $ret = [$col => $arr[$col]];
             }
         }
@@ -88,8 +82,7 @@ class Arr
     public static function groupBy($arr, $keyField)
     {
         $ret = [];
-        foreach ($arr as $row)
-        {
+        foreach ($arr as $row) {
             $key = $row[$keyField];
             $ret[$key][] = $row;
         }
@@ -102,21 +95,16 @@ class Arr
      * @param array $arr 要处理的数组
      * @param boolean $trim 是否对数组元素调用 trim 函数
      */
-    public static function removeEmpty(& $arr, $trim = TRUE)
+    public static function removeEmpty(& $arr, $trim = true)
     {
-        foreach ($arr as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($arr as $key => $value) {
+            if (is_array($value)) {
                 self::removeEmpty($arr[$key]);
-            } else
-            {
+            } else {
                 $value = trim($value); //移除字符串两侧的字符
-                if ($value == '')
-                {
+                if ($value == '') {
                     unset($arr[$key]);
-                } elseif ($trim)
-                {
+                } elseif ($trim) {
                     $arr[$key] = $value;
                 }
             }
@@ -132,17 +120,13 @@ class Arr
      */
     public static function getArrayLevel($arr)
     {
-        if (!is_array($arr))
-        {
+        if (!is_array($arr)) {
             return 0;
-        } else
-        {
+        } else {
             $max = 0;
-            foreach ($arr as $v)
-            {
+            foreach ($arr as $v) {
                 $ret = self::getArrayLevel($v);
-                if ($ret > $max)
-                {
+                if ($ret > $max) {
                     $max = $ret;
                 }
             }
@@ -159,15 +143,14 @@ class Arr
     public static function sortArrByManyField()
     {
         $args = func_get_args();
-        if (empty($args)) return null;
+        if (empty($args)) {
+            return null;
+        }
         $arr = array_shift($args);
-        foreach ($args as $key => $value)
-        {
-            if (is_string($value))
-            {
+        foreach ($args as $key => $value) {
+            if (is_string($value)) {
                 $temp = [];
-                foreach ($arr as $k => $v)
-                {
+                foreach ($arr as $k => $v) {
                     $temp[$k] = $v[$value];
                 }
                 $args[$key] = $temp;
@@ -188,8 +171,7 @@ class Arr
     public static function get_arr_column($data, $key)
     {
         $arr = [];
-        foreach ($data as $k => $val)
-        {
+        foreach ($data as $k => $val) {
             $arr[] = $val[$key];
         }
         return $arr;
@@ -204,13 +186,12 @@ class Arr
     public static function array_multi2single($data)
     {
         $arr = [];
-        foreach ($data as $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($data as $value) {
+            if (is_array($value)) {
                 self::array_multi2single($value);
-            } else
+            } else {
                 $result_array [] = $value;
+            }
         }
         return $arr;
     }
@@ -223,8 +204,7 @@ class Arr
     public static function parseArr($arr)
     {
         $result = [];
-        foreach ($arr as $item)
-        {
+        foreach ($arr as $item) {
             $result[$item] = $item;
         }
         return $result;
@@ -242,15 +222,11 @@ class Arr
     public static function formatDate($data, $field, $format = 'y-m-d H:i')
     {
         $return = [];
-        foreach ($data as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
                 self::formatDate($value, $field);
-            } else
-            {
-                if ($key == $field)
-                {
+            } else {
+                if ($key == $field) {
                     $data[$key] = date($format, $value);
                     array_push($return, $data);
                 }
@@ -269,8 +245,7 @@ class Arr
      */
     public static function toMapping($array, $recursive = false, $key = 'name', $value = 'value')
     {
-        foreach ($array as $index => $obj)
-        {
+        foreach ($array as $index => $obj) {
             $array[$index] = [
                 $key   => $index,
                 $value => is_array($obj) && $recursive
@@ -289,10 +264,8 @@ class Arr
      */
     public static function if_array($arr, $key, $value)
     {
-        foreach ($arr as $val)
-        {
-            if ($val[$key] == $value)
-            {
+        foreach ($arr as $val) {
+            if ($val[$key] == $value) {
                 return true;
             }
         }

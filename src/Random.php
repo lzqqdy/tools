@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * 随机
  * Class Random
@@ -38,8 +39,7 @@ class Random
     {
         $count = 0;
         $temp = [];
-        while ($count < $length)
-        {
+        while ($count < $length) {
             $temp[] = mt_rand($start, $end);
             $data = array_unique($temp);
             $count = count($data);
@@ -56,11 +56,9 @@ class Random
     public static function randomColor()
     {
         $str = '#';
-        for ($i = 0; $i < 6; $i++)
-        {
+        for ($i = 0; $i < 6; $i++) {
             $randNum = rand(0, 15);
-            switch ($randNum)
-            {
+            switch ($randNum) {
                 case 10:
                     $randNum = 'A';
                     break;
@@ -91,6 +89,6 @@ class Random
      */
     public static function createOrderNum()
     {
-        return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        return date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
     }
 }

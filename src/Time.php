@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * 时间处理
  * Class Time
@@ -34,10 +35,8 @@ class Time
             '60'       => '分钟',
             '1'        => '秒',
         ];
-        foreach ($f as $k => $v)
-        {
-            if (0 != $c = floor($t / (int)$k))
-            {
+        foreach ($f as $k => $v) {
+            if (0 != $c = floor($t / (int)$k)) {
                 return $c . $v . '前';
             }
         }
@@ -55,8 +54,7 @@ class Time
         //获取当前周几
         $week = date('w', $time);
         $date = [];
-        for ($i = 1; $i <= 7; $i++)
-        {
+        for ($i = 1; $i <= 7; $i++) {
             $date[$i] = date($format, strtotime('+' . $i - $week . ' days', $time));
         }
         return $date;
@@ -73,8 +71,7 @@ class Time
         $time = $time != '' ? $time : time();
         //组合数据
         $date = [];
-        for ($i = 1; $i <= 7; $i++)
-        {
+        for ($i = 1; $i <= 7; $i++) {
             $date[$i] = date($format, strtotime('+' . $i - 7 . ' days', $time));
         }
         return $date;
@@ -93,15 +90,13 @@ class Time
      * @param   mixed $now UNIX timestamp or date string
      * @return  integer
      */
-    public static function offset($remote, $local = NULL, $now = NULL)
+    public static function offset($remote, $local = null, $now = null)
     {
-        if ($local === NULL)
-        {
+        if ($local === null) {
             // Use the default timezone
             $local = date_default_timezone_get();
         }
-        if (is_int($now))
-        {
+        if (is_int($now)) {
             // Convert the timestamp into a string
             $now = date(DateTime::RFC2822, $now);
         }
@@ -129,14 +124,13 @@ class Time
      * @return  array    associative list of all outputs requested
      * @from https://github.com/kohana/ohanzee-helpers/blob/master/src/Date.php
      */
-    public static function span($remote, $local = NULL, $output = 'years,months,weeks,days,hours,minutes,seconds')
+    public static function span($remote, $local = null, $output = 'years,months,weeks,days,hours,minutes,seconds')
     {
         // Normalize output
         $output = trim(strtolower((string)$output));
-        if (!$output)
-        {
+        if (!$output) {
             // Invalid output
-            return FALSE;
+            return false;
         }
         // Array with the output formats
         $output = preg_split('/[^a-z]+/', $output);
@@ -144,44 +138,35 @@ class Time
         $output = array_combine($output, array_fill(0, count($output), 0));
         // Make the output values into keys
         extract(array_flip($output), EXTR_SKIP);
-        if ($local === NULL)
-        {
+        if ($local === null) {
             // Calculate the span from the current time
             $local = time();
         }
         // Calculate timespan (seconds)
         $timespan = abs($remote - $local);
-        if (isset($output['years']))
-        {
+        if (isset($output['years'])) {
             $timespan -= self::YEAR * ($output['years'] = (int)floor($timespan / self::YEAR));
         }
-        if (isset($output['months']))
-        {
+        if (isset($output['months'])) {
             $timespan -= self::MONTH * ($output['months'] = (int)floor($timespan / self::MONTH));
         }
-        if (isset($output['weeks']))
-        {
+        if (isset($output['weeks'])) {
             $timespan -= self::WEEK * ($output['weeks'] = (int)floor($timespan / self::WEEK));
         }
-        if (isset($output['days']))
-        {
+        if (isset($output['days'])) {
             $timespan -= self::DAY * ($output['days'] = (int)floor($timespan / self::DAY));
         }
-        if (isset($output['hours']))
-        {
+        if (isset($output['hours'])) {
             $timespan -= self::HOUR * ($output['hours'] = (int)floor($timespan / self::HOUR));
         }
-        if (isset($output['minutes']))
-        {
+        if (isset($output['minutes'])) {
             $timespan -= self::MINUTE * ($output['minutes'] = (int)floor($timespan / self::MINUTE));
         }
         // Seconds ago, 1
-        if (isset($output['seconds']))
-        {
+        if (isset($output['seconds'])) {
             $output['seconds'] = $timespan;
         }
-        if (count($output) === 1)
-        {
+        if (count($output) === 1) {
             // Only a single output was requested, return it
             return array_pop($output);
         }

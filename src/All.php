@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * Class All
  * @package lzqqdy\tools
@@ -21,8 +22,7 @@ class All
     function sortArrByOneField(&$array, $field, $sort)
     {
         $fieldArr = [];
-        foreach ($array as $k => $v)
-        {
+        foreach ($array as $k => $v) {
             $fieldArr[$k] = $v[$field];
         }
         array_multisort($fieldArr, $sort, $array);
@@ -41,15 +41,11 @@ class All
     function formatDate($data, $field, $format = 'y-m-d H:i')
     {
         $return = [];
-        foreach ($data as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
                 $this->formatDate($value, $field);
-            } else
-            {
-                if ($key == $field)
-                {
+            } else {
+                if ($key == $field) {
                     $data[$key] = date($format, $value);
                     array_push($return, $data);
                 }
@@ -68,8 +64,7 @@ class All
      */
     function getFilesTree($dir, $key = 0)
     {
-        if (!is_dir($dir))
-        {
+        if (!is_dir($dir)) {
             return false;
         }
         $domain = $_SERVER['SERVER_NAME'];
@@ -77,18 +72,15 @@ class All
         $files = [];
         $pattern = $dir . "*";
         $file_arr = glob($pattern);
-        foreach ($file_arr as $k => $file)
-        {
+        foreach ($file_arr as $k => $file) {
             $filename = str_replace('/', '', strrchr($file, '/'));
             $id = $k + 1;
-            if ($key > 0)
-            {
+            if ($key > 0) {
                 $id = $id + ($key * 10);
             }
             $new_file = str_replace('./', '', $file);
             $path = $domain . '/' . $new_file;
-            if (is_dir($file))
-            {
+            if (is_dir($file)) {
                 $files[] = [
                     'id'       => $id,
                     'pId'      => $key,
@@ -97,12 +89,10 @@ class All
                     'path'     => $path,
                 ];
                 $temp = $this->getFilesTree($file, $id);
-                if (is_array($temp))
-                {
+                if (is_array($temp)) {
                     $files = array_merge($files, $temp);
                 }
-            } else
-            {
+            } else {
                 $files[] = [
                     'id'       => $id,
                     'pId'      => $key,
@@ -129,18 +119,14 @@ class All
     {
         $trees = [];
         $lists = array_values($lists);
-        foreach ($lists as $key => $value)
-        {
-            if ($value['pId'] == $pid)
-            {
-                if ($max_level > 0 && $curr_level == $max_level)
-                {
+        foreach ($lists as $key => $value) {
+            if ($value['pId'] == $pid) {
+                if ($max_level > 0 && $curr_level == $max_level) {
                     return $trees;
                 }
                 unset($lists[$key]);
                 $child = $this->toLayer($lists, $value['id'], $max_level, $curr_level + 1);
-                if (!empty($child))
-                {
+                if (!empty($child)) {
                     $value['children'] = $child;
                 }
                 $trees[] = $value;
@@ -160,10 +146,8 @@ class All
     function unique(&$arr, $key)
     {
         $rAr = [];
-        for ($i = 0; $i < count($arr); $i++)
-        {
-            if (!isset($rAr[$arr[$i][$key]]))
-            {
+        for ($i = 0; $i < count($arr); $i++) {
+            if (!isset($rAr[$arr[$i][$key]])) {
                 $rAr[$arr[$i][$key]] = $arr[$i];
             }
         }
@@ -182,16 +166,12 @@ class All
     function getCols($arr, $col)
     {
         $ret = [];
-        foreach ($arr as $row)
-        {
-            if (is_array($row))
-            {
-                if (isset($row[$col]))
-                {
+        foreach ($arr as $row) {
+            if (is_array($row)) {
+                if (isset($row[$col])) {
                     $ret[] = $row[$col];
                 }
-            } else
-            {
+            } else {
                 $ret = [$col => $arr[$col]];
             }
         }
@@ -209,8 +189,7 @@ class All
     function groupBy($arr, $keyField)
     {
         $ret = [];
-        foreach ($arr as $row)
-        {
+        foreach ($arr as $row) {
             $key = $row[$keyField];
             $ret[$key][] = $row;
         }
@@ -223,21 +202,16 @@ class All
      * @param array $arr 要处理的数组
      * @param boolean $trim 是否对数组元素调用 trim 函数
      */
-    function removeEmpty(& $arr, $trim = TRUE)
+    function removeEmpty(& $arr, $trim = true)
     {
-        foreach ($arr as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($arr as $key => $value) {
+            if (is_array($value)) {
                 $this->removeEmpty($arr[$key]);
-            } else
-            {
+            } else {
                 $value = trim($value); //移除字符串两侧的字符
-                if ($value == '')
-                {
+                if ($value == '') {
                     unset($arr[$key]);
-                } elseif ($trim)
-                {
+                } elseif ($trim) {
                     $arr[$key] = $value;
                 }
             }
@@ -253,17 +227,13 @@ class All
      */
     function getArrayLevel($arr)
     {
-        if (!is_array($arr))
-        {
+        if (!is_array($arr)) {
             return 0;
-        } else
-        {
+        } else {
             $max = 0;
-            foreach ($arr as $v)
-            {
+            foreach ($arr as $v) {
                 $ret = $this->getArrayLevel($v);
-                if ($ret > $max)
-                {
+                if ($ret > $max) {
                     $max = $ret;
                 }
             }
@@ -287,18 +257,13 @@ class All
     {
         $method = strtoupper($method);
         $ch = curl_init();
-        if ('GET' == $method)
-        {
-            if ($data)
-            {
-                if (strpos($uri, '?'))
-                {
-                    foreach ($data as $key => $item)
-                    {
+        if ('GET' == $method) {
+            if ($data) {
+                if (strpos($uri, '?')) {
+                    foreach ($data as $key => $item) {
                         $uri .= "&{$key}={$item}";
                     }
-                } else
-                {
+                } else {
                     $uri .= '?' . urldecode(http_build_query($data));
                 }
             }
@@ -307,8 +272,7 @@ class All
         $params[CURLOPT_RETURNTRANSFER] = 1;
         $params[CURLOPT_SSL_VERIFYPEER] = false;
         $params[CURLOPT_SSL_VERIFYHOST] = false;
-        if ($method == 'POST')
-        {
+        if ($method == 'POST') {
             $params[CURLOPT_POST] = 1;
             $params[CURLOPT_POSTFIELDS] = $data;
         }
@@ -316,21 +280,18 @@ class All
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        if ($method == 'POST')
-        {
+        if ($method == 'POST') {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? urldecode(http_build_query($data)) : $data);
         }
-        if ($secret && $key)
-        {
+        if ($secret && $key) {
             $params[CURLOPT_SSLCERTTYPE] = 'PEM';
             $params[CURLOPT_SSLCERT] = $secret;
             $params[CURLOPT_SSLKEYTYPE] = 'PEM';
             $params[CURLOPT_SSLKEY] = $key;
         }
         curl_setopt_array($ch, $params);
-        if (curl_errno($ch))
-        {
+        if (curl_errno($ch)) {
             throw new \Exception(curl_error($ch));
         }
         $response = curl_exec($ch);
@@ -384,10 +345,8 @@ class All
             '60'       => '分钟',
             '1'        => '秒',
         ];
-        foreach ($f as $k => $v)
-        {
-            if (0 != $c = floor($t / (int)$k))
-            {
+        foreach ($f as $k => $v) {
+            if (0 != $c = floor($t / (int)$k)) {
                 return $c . $v . '前';
             }
         }
@@ -401,15 +360,14 @@ class All
     function sortArrByManyField()
     {
         $args = func_get_args();
-        if (empty($args)) return null;
+        if (empty($args)) {
+            return null;
+        }
         $arr = array_shift($args);
-        foreach ($args as $key => $value)
-        {
-            if (is_string($value))
-            {
+        foreach ($args as $key => $value) {
+            if (is_string($value)) {
                 $temp = [];
-                foreach ($arr as $k => $v)
-                {
+                foreach ($arr as $k => $v) {
                     $temp[$k] = $v[$value];
                 }
                 $args[$key] = $temp;
@@ -426,14 +384,11 @@ class All
      */
     function getIp()
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP']))
-        {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-        {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else
-        {
+        } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         return $ip;
@@ -464,8 +419,7 @@ class All
     {
         $count = 0;
         $temp = [];
-        while ($count < $length)
-        {
+        while ($count < $length) {
             $temp[] = mt_rand($start, $end);
             $data = array_unique($temp);
             $count = count($data);
@@ -493,24 +447,18 @@ class All
     {
         $array = explode($sign, $str);
         $length = count($array);
-        if ($number < 0)
-        {
+        if ($number < 0) {
             $new_array = array_reverse($array);
             $abs_number = abs($number);
-            if ($abs_number > $length)
-            {
+            if ($abs_number > $length) {
                 return 'error';
-            } else
-            {
+            } else {
                 return $new_array[$abs_number - 1];
             }
-        } else
-        {
-            if ($number >= $length)
-            {
+        } else {
+            if ($number >= $length) {
                 return 'error';
-            } else
-            {
+            } else {
                 return $array[$number];
             }
         }
@@ -525,8 +473,7 @@ class All
     function get_arr_column($data, $key)
     {
         $arr = [];
-        foreach ($data as $k => $val)
-        {
+        foreach ($data as $k => $val) {
             $arr[] = $val[$key];
         }
         return $arr;
@@ -540,13 +487,12 @@ class All
     function array_multi2single($data)
     {
         $arr = [];
-        foreach ($data as $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($data as $value) {
+            if (is_array($value)) {
                 $this->array_multi2single($value);
-            } else
+            } else {
                 $result_array [] = $value;
+            }
         }
         return $arr;
     }
@@ -567,17 +513,13 @@ class All
      */
     public function formatBytes($size)
     {
-        if ($size >= 1073741824)
-        {
+        if ($size >= 1073741824) {
             $size = round($size / 1073741824 * 100) / 100 . 'GB';
-        } elseif ($size >= 1048576)
-        {
+        } elseif ($size >= 1048576) {
             $size = round($size / 1048576 * 100) / 100 . 'MB';
-        } elseif ($size >= 1024)
-        {
+        } elseif ($size >= 1024) {
             $size = round($size / 1024 * 100) / 100 . 'KB';
-        } else
-        {
+        } else {
             $size = $size . 'Bytes';
         }
         return $size;
@@ -590,11 +532,9 @@ class All
     function randomColor()
     {
         $str = '#';
-        for ($i = 0; $i < 6; $i++)
-        {
+        for ($i = 0; $i < 6; $i++) {
             $randNum = rand(0, 15);
-            switch ($randNum)
-            {
+            switch ($randNum) {
                 case 10:
                     $randNum = 'A';
                     break;
@@ -627,8 +567,7 @@ class All
     function parseArr($arr)
     {
         $result = [];
-        foreach ($arr as $item)
-        {
+        foreach ($arr as $item) {
             $result[$item] = $item;
         }
         return $result;
@@ -646,8 +585,7 @@ class All
         //获取当前周几
         $week = date('w', $time);
         $date = [];
-        for ($i = 1; $i <= 7; $i++)
-        {
+        for ($i = 1; $i <= 7; $i++) {
             $date[$i] = date($format, strtotime('+' . $i - $week . ' days', $time));
         }
         return $date;
@@ -664,8 +602,7 @@ class All
         $time = $time != '' ? $time : time();
         //组合数据
         $date = [];
-        for ($i = 1; $i <= 7; $i++)
-        {
+        for ($i = 1; $i <= 7; $i++) {
             $date[$i] = date($format, strtotime('+' . $i - 7 . ' days', $time));
         }
         return $date;
@@ -681,8 +618,7 @@ class All
      */
     public function toMapping($array, $recursive = false, $key = 'name', $value = 'value')
     {
-        foreach ($array as $index => $obj)
-        {
+        foreach ($array as $index => $obj) {
             $array[$index] = [
                 $key   => $index,
                 $value => is_array($obj) && $recursive
@@ -701,10 +637,8 @@ class All
      */
     public function if_array($arr, $key, $value)
     {
-        foreach ($arr as $val)
-        {
-            if ($val[$key] == $value)
-            {
+        foreach ($arr as $val) {
+            if ($val[$key] == $value) {
                 return true;
             }
         }

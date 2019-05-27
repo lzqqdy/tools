@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * 方法调用测试
  * @package lzqqdy\tools
@@ -47,12 +48,10 @@ class Test
             'width' => 430,
         ];
         $ret = $WeChat->getQRCode($token['access_token'], $data); //生成二维码
-        if ($ret)
-        {
+        if ($ret) {
 //            $WeChat->writeImg($ret, './', 'test.png'); //二维码写入本地
             var_dump($ret);
-        } else
-        {
+        } else {
             var_dump($WeChat->getError()); //获取错误信息
         }
     }

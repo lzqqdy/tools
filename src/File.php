@@ -1,6 +1,7 @@
 <?php
 
 namespace lzqqdy\tools;
+
 /**
  * 文件处理类
  * Class File
@@ -16,8 +17,7 @@ class File
      */
     public static function isReadable($filename)
     {
-        if (!$fh = @fopen($filename, 'r', true))
-        {
+        if (!$fh = @fopen($filename, 'r', true)) {
             return false;
         }
         @fclose($fh);
@@ -34,8 +34,7 @@ class File
      */
     public static function getFilesTree($dir, $key = 0)
     {
-        if (!is_dir($dir))
-        {
+        if (!is_dir($dir)) {
             return false;
         }
         $domain = $_SERVER['SERVER_NAME'];
@@ -43,18 +42,15 @@ class File
         $files = [];
         $pattern = $dir . "*";
         $file_arr = glob($pattern);
-        foreach ($file_arr as $k => $file)
-        {
+        foreach ($file_arr as $k => $file) {
             $filename = str_replace('/', '', strrchr($file, '/'));
             $id = $k + 1;
-            if ($key > 0)
-            {
+            if ($key > 0) {
                 $id = $id + ($key * 10);
             }
             $new_file = str_replace('./', '', $file);
             $path = $domain . '/' . $new_file;
-            if (is_dir($file))
-            {
+            if (is_dir($file)) {
                 $files[] = [
                     'id'       => $id,
                     'pId'      => $key,
@@ -63,12 +59,10 @@ class File
                     'path'     => $path,
                 ];
                 $temp = self::getFilesTree($file, $id);
-                if (is_array($temp))
-                {
+                if (is_array($temp)) {
                     $files = array_merge($files, $temp);
                 }
-            } else
-            {
+            } else {
                 $files[] = [
                     'id'       => $id,
                     'pId'      => $key,
@@ -90,10 +84,8 @@ class File
     public static function mk_dir($dir)
     {
         $dir = rtrim($dir, '/') . '/';
-        if (!is_dir($dir))
-        {
-            if (mkdir($dir, 0700, true) == false)
-            {
+        if (!is_dir($dir)) {
+            if (mkdir($dir, 0700, true) == false) {
                 return false;
             }
             return true;
@@ -108,13 +100,10 @@ class File
      */
     public static function create_dir_or_files($files)
     {
-        foreach ($files as $key => $value)
-        {
-            if (substr($value, -1) == '/')
-            {
+        foreach ($files as $key => $value) {
+            if (substr($value, -1) == '/') {
                 mkdir($value, 0777, true);
-            } else
-            {
+            } else {
                 @file_put_contents($value, '');
             }
         }
@@ -129,13 +118,10 @@ class File
     public static function read_file($filename)
     {
         $content = '';
-        if (function_exists('file_get_contents'))
-        {
+        if (function_exists('file_get_contents')) {
             @$content = file_get_contents($filename);
-        } else
-        {
-            if (@$fp = fopen($filename, 'r'))
-            {
+        } else {
+            if (@$fp = fopen($filename, 'r')) {
                 @$content = fread($fp, filesize($filename));
                 @fclose($fp);
             }
@@ -153,14 +139,12 @@ class File
      */
     public static function write_file($filename, $writetext, $openmod = 'w')
     {
-        if (@$fp = fopen($filename, $openmod))
-        {
+        if (@$fp = fopen($filename, $openmod)) {
             flock($fp, 2);
             fwrite($fp, $writetext);
             fclose($fp);
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
@@ -173,22 +157,17 @@ class File
      */
     public static function del_dir($dirName)
     {
-        if (!file_exists($dirName))
-        {
+        if (!file_exists($dirName)) {
             return false;
         }
 
         $dir = opendir($dirName);
-        while ($fileName = readdir($dir))
-        {
+        while ($fileName = readdir($dir)) {
             $file = $dirName . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..')
-            {
-                if (is_dir($file))
-                {
+            if ($fileName != '.' && $fileName != '..') {
+                if (is_dir($file)) {
                     self::del_dir($file);
-                } else
-                {
+                } else {
                     unlink($file);
                 }
             }
@@ -208,27 +187,21 @@ class File
     {
         $surDir = rtrim($surDir, '/') . '/';
         $toDir = rtrim($toDir, '/') . '/';
-        if (!file_exists($surDir))
-        {
+        if (!file_exists($surDir)) {
             return false;
         }
 
-        if (!file_exists($toDir))
-        {
+        if (!file_exists($toDir)) {
             self::mk_dir($toDir);
         }
         $file = opendir($surDir);
-        while ($fileName = readdir($file))
-        {
+        while ($fileName = readdir($file)) {
             $file1 = $surDir . '/' . $fileName;
             $file2 = $toDir . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..')
-            {
-                if (is_dir($file1))
-                {
+            if ($fileName != '.' && $fileName != '..') {
+                if (is_dir($file1)) {
                     self::copy_dir($file1, $file2);
-                } else
-                {
+                } else {
                     copy($file1, $file2);
                 }
             }
@@ -246,18 +219,14 @@ class File
     {
         $dir = rtrim($dir, '/') . '/';
         $dirArray = [];
-        if (false != ($handle = opendir($dir)))
-        {
+        if (false != ($handle = opendir($dir))) {
             $i = 0;
             $j = 0;
-            while (false !== ($file = readdir($handle)))
-            {
-                if (is_dir($dir . $file))
-                { //判断是否文件夹
+            while (false !== ($file = readdir($handle))) {
+                if (is_dir($dir . $file)) { //判断是否文件夹
                     $dirArray ['dir'] [$i] = $file;
                     $i++;
-                } else
-                {
+                } else {
                     $dirArray ['file'] [$j] = $file;
                     $j++;
                 }
@@ -276,15 +245,11 @@ class File
     {
         $dirlist = opendir($dir);
         $dirsize = 0;
-        while (false !== ($folderorfile = readdir($dirlist)))
-        {
-            if ($folderorfile != "." && $folderorfile != "..")
-            {
-                if (is_dir("$dir/$folderorfile"))
-                {
+        while (false !== ($folderorfile = readdir($dirlist))) {
+            if ($folderorfile != "." && $folderorfile != "..") {
+                if (is_dir("$dir/$folderorfile")) {
                     $dirsize += self::get_size("$dir/$folderorfile");
-                } else
-                {
+                } else {
                     $dirsize += filesize("$dir/$folderorfile");
                 }
             }
@@ -315,31 +280,30 @@ class File
     {
         static $_cache = array();
         $filename = $path . $name . '.php';
-        if ('' !== $value)
-        {
-            if (is_null($value))
-            {
+        if ('' !== $value) {
+            if (is_null($value)) {
                 // 删除缓存
                 return false !== strpos($name, '*') ? array_map("unlink", glob($filename)) : unlink($filename);
-            } else
-            {
+            } else {
                 // 缓存数据
                 $dir = dirname($filename);
                 // 目录不存在则创建
-                if (!is_dir($dir))
+                if (!is_dir($dir)) {
                     mkdir($dir, 0755, true);
+                }
                 $_cache[$name] = $value;
-                return file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($value, true) . ";?>"));
+                return file_put_contents($filename,
+                    strip_whitespace("<?php\treturn " . var_export($value, true) . ";?>"));
             }
         }
-        if (isset($_cache[$name]) && $cached == true) return $_cache[$name];
+        if (isset($_cache[$name]) && $cached == true) {
+            return $_cache[$name];
+        }
         // 获取缓存数据
-        if (is_file($filename))
-        {
+        if (is_file($filename)) {
             $value = include $filename;
             $_cache[$name] = $value;
-        } else
-        {
+        } else {
             $value = false;
         }
         return $value;
