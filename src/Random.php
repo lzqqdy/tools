@@ -91,4 +91,25 @@ class Random
     {
         return date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
     }
+
+    /**
+     * 生成随机密码
+     * @param int $length 长度
+     * @param string $chars 字符集
+     * @return string
+     */
+    public static function getRandPass($length = 6, $chars = '')
+    {
+        $password = '';
+
+        $chars ?: $chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $char_len = strlen($chars);
+
+        for ($i = 0; $i < $length; $i++) {
+            $loop = mt_rand(0, ($char_len - 1));
+            $password .= $chars[$loop];
+        }
+
+        return $password;
+    }
 }
