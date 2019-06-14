@@ -665,4 +665,20 @@ class All
         $xml .= "</xml>";
         return $xml;
     }
+
+    /**
+     * 将二维数组以指定的key作为数组的键名
+     *
+     * @param $arr
+     * @param $key_name
+     * @return array
+     */
+    public function convert_arr_key($arr, $key_name)
+    {
+        $data = array();
+        foreach ($arr as $key => $val) {
+            $data[$val[$key_name]] = $val;
+        }
+        return $data;
+    }
 }
