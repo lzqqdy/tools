@@ -472,4 +472,29 @@ class Str
             floor($b * 255),
         ];
     }
+
+    /**
+     * 转换数字为简短形式
+     * @param $n int 要转换的数字
+     * @param $precision int 精度
+     */
+    public static function shortenNumber($n, $precision = 1)
+    {
+        if ($n < 1e+3) {
+            $out = number_format($n);
+        } else {
+            if ($n < 1e+6) {
+                $out = number_format($n / 1e+3, $precision) . 'k';
+            } else {
+                if ($n < 1e+9) {
+                    $out = number_format($n / 1e+6, $precision) . 'm';
+                } else {
+                    if ($n < 1e+12) {
+                        $out = number_format($n / 1e+9, $precision) . 'b';
+                    }
+                }
+            }
+        }
+        return $out;
+    }
 }
