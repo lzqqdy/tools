@@ -308,4 +308,23 @@ class Arr
         }
         return $data;
     }
+
+    /**
+     * 两个数组的笛卡尔积
+     *
+     * @param array $arr1
+     * @param array $arr2
+     */
+    public static function combineArray($arr1, $arr2)
+    {
+        $result = array();
+        foreach ($arr1 as $item1) {
+            foreach ($arr2 as $item2) {
+                $temp = $item1;
+                $temp[] = $item2;
+                $result[] = $temp;
+            }
+        }
+        return $result;
+    }
 }
