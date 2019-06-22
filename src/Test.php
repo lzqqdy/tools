@@ -55,4 +55,7 @@ class Test
             var_dump($WeChat->getError()); //获取错误信息
         }
     }
+    public function test(){
+        //测试
+    }
 }
