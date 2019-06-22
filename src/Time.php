@@ -181,7 +181,7 @@ class Time
      * @param $end_time
      * @return array
      */
-    public static function timediff($begin_time, $end_time)
+    public static function timeDiff($begin_time, $end_time)
     {
         if ($begin_time < $end_time) {
             $starttime = $begin_time;
