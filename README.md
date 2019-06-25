@@ -34,6 +34,10 @@
 * 获取本周所有日期 get_week
 * 获取最近七天所有日期 get_weeks
 * 一维数组转二维 toMapping
+* 判断二维数组是否存在某键值对 if_array
+* 数组转xml arrayToXml
+* 将二维数组以指定的key作为数组的键名 convert_arr_key
+* 两个数组的笛卡尔积 combineArray
 * ......
 ```
 ### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)
