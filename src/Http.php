@@ -215,11 +215,13 @@ class Http
     public static function downImg($url, $dir, $name)
     {
         $req = self::sendRequest($url, $params, 'GET');
-        File::mk_dir($dir);
-        $files = $dir . $name;
-        $file  = fopen($files, "w");
-        fwrite($file, $string);
-        fclose($file);
+        if ($req['ret']) {
+            File::mk_dir($dir);
+            $files = $dir . $name;
+            $file  = fopen($files, "w");
+            fwrite($file, $req['msg']);
+            fclose($file);
+        }
 
         return $files;
     }
