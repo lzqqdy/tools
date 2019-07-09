@@ -2,9 +2,12 @@
 
 namespace lzqqdy\tools;
 
+use lzqqdy\tools\File;
+
 /**
  * HTTP请求
  * Class Http
+ *
  * @package lzqqdy\tools
  */
 class Http
@@ -12,48 +15,57 @@ class Http
 
     /**
      * 发送一个POST请求
-     * @param $url
+     *
+     * @param       $url
      * @param array $params
      * @param array $options
+     *
      * @return mixed|string
      */
     public static function post($url, $params = [], $options = [])
     {
         $req = self::sendRequest($url, $params, 'POST', $options);
+
         return $req['ret'] ? $req['msg'] : '';
     }
 
     /**
      * 发送一个GET请求
-     * @param $url
+     *
+     * @param       $url
      * @param array $params
      * @param array $options
+     *
      * @return mixed|string
      */
     public static function get($url, $params = [], $options = [])
     {
         $req = self::sendRequest($url, $params, 'GET', $options);
+
         return $req['ret'] ? $req['msg'] : '';
     }
 
     /**
      * CURL发送Request请求,含POST和REQUEST
-     * @param string $url 请求的链接
-     * @param mixed $params 传递的参数
-     * @param string $method 请求的方法
-     * @param mixed $options CURL的参数
+     *
+     * @param string $url     请求的链接
+     * @param mixed  $params  传递的参数
+     * @param string $method  请求的方法
+     * @param mixed  $options CURL的参数
+     *
      * @return array
      */
     public static function sendRequest($url, $params = [], $method = 'POST', $options = [])
     {
-        $method = strtoupper($method);
-        $protocol = substr($url, 0, 5);
+        $method       = strtoupper($method);
+        $protocol     = substr($url, 0, 5);
         $query_string = is_array($params) ? http_build_query($params) : $params;
 
-        $ch = curl_init();
+        $ch       = curl_init();
         $defaults = [];
         if ('GET' == $method) {
-            $geturl = $query_string ? $url . (stripos($url, "?") !== false ? "&" : "?") . $query_string : $url;
+            $geturl                = $query_string ? $url . (stripos($url,
+                    "?") !== false ? "&" : "?") . $query_string : $url;
             $defaults[CURLOPT_URL] = $geturl;
         } else {
             $defaults[CURLOPT_URL] = $url;
@@ -65,12 +77,12 @@ class Http
             $defaults[CURLOPT_POSTFIELDS] = $query_string;
         }
 
-        $defaults[CURLOPT_HEADER] = false;
-        $defaults[CURLOPT_USERAGENT] = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.98 Safari/537.36";
+        $defaults[CURLOPT_HEADER]         = false;
+        $defaults[CURLOPT_USERAGENT]      = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.98 Safari/537.36";
         $defaults[CURLOPT_FOLLOWLOCATION] = true;
         $defaults[CURLOPT_RETURNTRANSFER] = true;
         $defaults[CURLOPT_CONNECTTIMEOUT] = 3;
-        $defaults[CURLOPT_TIMEOUT] = 3;
+        $defaults[CURLOPT_TIMEOUT]        = 3;
 
         // disable 100-continue
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
@@ -85,10 +97,11 @@ class Http
         $ret = curl_exec($ch);
         $err = curl_error($ch);
 
-        if (false === $ret || !empty($err)) {
+        if (false === $ret || ! empty($err)) {
             $errno = curl_errno($ch);
-            $info = curl_getinfo($ch);
+            $info  = curl_getinfo($ch);
             curl_close($ch);
+
             return [
                 'ret'   => false,
                 'errno' => $errno,
@@ -97,6 +110,7 @@ class Http
             ];
         }
         curl_close($ch);
+
         return [
             'ret' => true,
             'msg' => $ret,
@@ -105,9 +119,11 @@ class Http
 
     /**
      * 异步发送一个请求
-     * @param string $url 请求的链接
-     * @param mixed $params 请求的参数
+     *
+     * @param string $url    请求的链接
+     * @param mixed  $params 请求的参数
      * @param string $method 请求的方法
+     *
      * @return boolean TRUE
      */
     public static function sendAsyncRequest($url, $params = [], $method = 'POST')
@@ -131,12 +147,12 @@ class Http
         //构造查询的参数
         if ($method == 'GET' && $post_string) {
             $parts['query'] = isset($parts['query']) ? $parts['query'] . '&' . $post_string : $post_string;
-            $post_string = '';
+            $post_string    = '';
         }
         $parts['query'] = isset($parts['query']) && $parts['query'] ? '?' . $parts['query'] : '';
         //发送socket请求,获得连接句柄
         $fp = fsockopen($parts['host'], isset($parts['port']) ? $parts['port'] : 80, $errno, $errstr, 3);
-        if (!$fp) {
+        if ( ! $fp) {
             return false;
         }
         //设置超时时间
@@ -153,14 +169,16 @@ class Http
         //不用关心服务器返回结果
         //echo fread($fp, 1024);
         fclose($fp);
+
         return true;
     }
 
     /**
      * 发送文件到客户端
+     *
      * @param string $file
-     * @param bool $delaftersend
-     * @param bool $exitaftersend
+     * @param bool   $delaftersend
+     * @param bool   $exitaftersend
      */
     public static function sendToBrowser($file, $delaftersend = true, $exitaftersend = true)
     {
@@ -185,4 +203,24 @@ class Http
         }
     }
 
+    /**
+     * 下载图片到本地
+     *
+     * @param        $url
+     * @param string $dir  文件夹名称
+     * @param string $name 文件名称
+     *
+     * @return mixed
+     */
+    public static function downImg($url, $dir, $name)
+    {
+        $req = self::sendRequest($url, $params, 'GET');
+        File::mk_dir($dir);
+        $files = $dir . $name;
+        $file  = fopen($files, "w");
+        fwrite($file, $string);
+        fclose($file);
+
+        return $files;
+    }
 }
