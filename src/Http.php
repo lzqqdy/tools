@@ -48,23 +48,23 @@ class Http
     /**
      * CURL发送Request请求,含POST和REQUEST
      *
-     * @param string $url     请求的链接
-     * @param mixed  $params  传递的参数
-     * @param string $method  请求的方法
-     * @param mixed  $options CURL的参数
+     * @param string $url 请求的链接
+     * @param mixed $params 传递的参数
+     * @param string $method 请求的方法
+     * @param mixed $options CURL的参数
      *
      * @return array
      */
     public static function sendRequest($url, $params = [], $method = 'POST', $options = [])
     {
-        $method       = strtoupper($method);
-        $protocol     = substr($url, 0, 5);
+        $method = strtoupper($method);
+        $protocol = substr($url, 0, 5);
         $query_string = is_array($params) ? http_build_query($params) : $params;
 
-        $ch       = curl_init();
+        $ch = curl_init();
         $defaults = [];
         if ('GET' == $method) {
-            $geturl                = $query_string ? $url . (stripos($url,
+            $geturl = $query_string ? $url . (stripos($url,
                     "?") !== false ? "&" : "?") . $query_string : $url;
             $defaults[CURLOPT_URL] = $geturl;
         } else {
@@ -77,12 +77,12 @@ class Http
             $defaults[CURLOPT_POSTFIELDS] = $query_string;
         }
 
-        $defaults[CURLOPT_HEADER]         = false;
-        $defaults[CURLOPT_USERAGENT]      = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.98 Safari/537.36";
+        $defaults[CURLOPT_HEADER] = false;
+        $defaults[CURLOPT_USERAGENT] = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.98 Safari/537.36";
         $defaults[CURLOPT_FOLLOWLOCATION] = true;
         $defaults[CURLOPT_RETURNTRANSFER] = true;
         $defaults[CURLOPT_CONNECTTIMEOUT] = 3;
-        $defaults[CURLOPT_TIMEOUT]        = 3;
+        $defaults[CURLOPT_TIMEOUT] = 3;
 
         // disable 100-continue
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
@@ -97,9 +97,9 @@ class Http
         $ret = curl_exec($ch);
         $err = curl_error($ch);
 
-        if (false === $ret || ! empty($err)) {
+        if (false === $ret || !empty($err)) {
             $errno = curl_errno($ch);
-            $info  = curl_getinfo($ch);
+            $info = curl_getinfo($ch);
             curl_close($ch);
 
             return [
@@ -120,8 +120,8 @@ class Http
     /**
      * 异步发送一个请求
      *
-     * @param string $url    请求的链接
-     * @param mixed  $params 请求的参数
+     * @param string $url 请求的链接
+     * @param mixed $params 请求的参数
      * @param string $method 请求的方法
      *
      * @return boolean TRUE
@@ -147,12 +147,12 @@ class Http
         //构造查询的参数
         if ($method == 'GET' && $post_string) {
             $parts['query'] = isset($parts['query']) ? $parts['query'] . '&' . $post_string : $post_string;
-            $post_string    = '';
+            $post_string = '';
         }
         $parts['query'] = isset($parts['query']) && $parts['query'] ? '?' . $parts['query'] : '';
         //发送socket请求,获得连接句柄
         $fp = fsockopen($parts['host'], isset($parts['port']) ? $parts['port'] : 80, $errno, $errstr, 3);
-        if ( ! $fp) {
+        if (!$fp) {
             return false;
         }
         //设置超时时间
@@ -177,8 +177,8 @@ class Http
      * 发送文件到客户端
      *
      * @param string $file
-     * @param bool   $delaftersend
-     * @param bool   $exitaftersend
+     * @param bool $delaftersend
+     * @param bool $exitaftersend
      */
     public static function sendToBrowser($file, $delaftersend = true, $exitaftersend = true)
     {
@@ -207,22 +207,24 @@ class Http
      * 下载图片到本地
      *
      * @param        $url
-     * @param string $dir  文件夹名称
+     * @param string $dir 文件夹名称
      * @param string $name 文件名称
      *
      * @return mixed
      */
     public static function downImg($url, $dir, $name)
     {
-        $req = self::sendRequest($url, $params, 'GET');
-        if ($req['ret']) {
-            File::mk_dir($dir);
-            $files = $dir . $name;
-            $file  = fopen($files, "w");
-            fwrite($file, $req['msg']);
-            fclose($file);
-        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        $file = curl_exec($ch);
+        curl_close($ch);
 
-        return $files;
+        $savePath = $dir . $name . '.jpg';
+        $resource = fopen($savePath, 'a');
+        fwrite($resource, $file);
+        fclose($resource);
+        return $savePath;
     }
 }
