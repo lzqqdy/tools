@@ -513,4 +513,30 @@ class Str
 
         return $str;
     }
+
+    /**
+     * 检查字符串中是否包含另一字符串
+     * @param string $haystack 被检查的字符串
+     * @param string|array $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
+     * @author : evalor <master@evalor.cn>
+     * @return bool
+     */
+    public static function contains($haystack, $needles, $strict = true)
+    {
+        // 不区分大小写的情况下 全部转为小写
+        if (!$strict) {
+            $haystack = mb_strtolower($haystack);
+        }
+        // 支持以数组方式传入 needles 检查多个字符串
+        foreach ((array)$needles as $needle) {
+            if (!$strict) {
+                $needle = mb_strtolower($needle);
+            }
+            if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
