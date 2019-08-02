@@ -539,4 +539,56 @@ class Str
         }
         return false;
     }
+
+    /**
+     * 检查字符串是否以某个字符串开头
+     * @param string $haystack 被检查的字符串
+     * @param string $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
+     * @author : evalor <master@evalor.cn>
+     * @return bool
+     */
+    public static function startsWith($haystack, $needles, $strict = true)
+    {
+        // 不区分大小写的情况下 全部转为小写
+        if (!$strict) {
+            $haystack = mb_strtolower($haystack);
+        }
+        // 支持以数组方式传入 needles 检查多个字符串
+        foreach ((array)$needles as $needle) {
+            if (!$strict) {
+                $needle = mb_strtolower($needle);
+            }
+            if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 检查字符串是否以某个字符串结尾
+     * @param string $haystack 被检查的字符串
+     * @param string $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
+     * @author : evalor <master@evalor.cn>
+     * @return bool
+     */
+    public static function endsWith($haystack, $needles, $strict = true)
+    {
+        // 不区分大小写的情况下 全部转为小写
+        if (!$strict) {
+            $haystack = mb_strtolower($haystack);
+        }
+        // 支持以数组方式传入 needles 检查多个字符串
+        foreach ((array)$needles as $needle) {
+            if (!$strict) {
+                $needle = mb_strtolower($needle);
+            }
+            if ((string)$needle === mb_substr($haystack, -mb_strlen($needle))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
