@@ -327,4 +327,18 @@ class Arr
         }
         return $result;
     }
+
+    /**
+     * 数组随机抽出一个
+     * @param array $data
+     * @return mixed|null
+     */
+    public static function arrayRandOne(array $data)
+    {
+        if (empty($data)) {
+            return null;
+        }
+        mt_srand();
+        return $data[array_rand($data)];
+    }
 }
