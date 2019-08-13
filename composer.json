@@ -1,9 +1,15 @@
 {
   "name": "lzqqdy/tools",
   "description": "tools",
+  "keywords": [
+    "lzqqdy",
+    "tools"
+  ],
+  "homepage": "https://www.lzqqdy.cn/",
   "authors": [
     {
-      "name": "lzqqdy"
+      "name": "lzqqdy",
+      "email": "lzqqdy@qq.com"
     }
   ],
   "license": "MIT",
