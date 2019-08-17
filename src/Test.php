@@ -7,8 +7,6 @@ namespace lzqqdy\tools;
  * @package lzqqdy\tools
  */
 
-use lzqqdy\tools\WeChat;
-
 class Test
 {
     /**
