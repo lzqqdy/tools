@@ -591,4 +591,43 @@ class Str
         }
         return false;
     }
+
+    /**
+     * 驼峰转下划线
+     * @param string $value 待处理字符串
+     * @param string $delimiter 分隔符
+     * @author : evalor <master@evalor.cn>
+     * @return null|string|string[]
+     */
+    public static function snake($value, $delimiter = '_')
+    {
+        if (!ctype_lower($value)) {
+            $value = preg_replace('/\s+/u', '', $value);
+            $value = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1' . $delimiter, $value));
+        }
+        return $value;
+    }
+
+    /**
+     * 下划线转驼峰 (首字母小写)
+     * @param string $value 待处理字符串
+     * @author : evalor <master@evalor.cn>
+     * @return string
+     */
+    public static function camel($value)
+    {
+        return lcfirst(static::studly($value));
+    }
+
+    /**
+     * 下划线转驼峰 (首字母大写)
+     * @param string $value 待处理字符串
+     * @author : evalor <master@evalor.cn>
+     * @return mixed
+     */
+    public static function studly($value)
+    {
+        $value = ucwords(str_replace(['-', '_'], ' ', $value));
+        return str_replace(' ', '', $value);
+    }
 }
