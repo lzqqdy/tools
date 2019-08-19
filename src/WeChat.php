@@ -2,9 +2,6 @@
 
 namespace lzqqdy\tools;
 
-use lzqqdy\tools\Http;
-use lzqqdy\tools\File;
-
 /**
  * 微信小程序部分常用接口
  * Class WeChat
@@ -43,7 +40,9 @@ class WeChat
      */
     public function wxLogin($code)
     {
-        $url = self::AUTH_CODE2_SESSION . 'appid=' . $this->appid . '&secret=' . $this->appsecret . '&js_code=' . $code . '&grant_type=' . self::GRAND_TYPE;
+        $url = self::AUTH_CODE2_SESSION . 'appid=' . $this->appid
+            . '&secret=' . $this->appsecret . '&js_code=' . $code
+            . '&grant_type=' . self::GRAND_TYPE;
         $result = Http::get($url);
         if ($result) {
             $result = json_decode($result, true);
@@ -96,7 +95,8 @@ class WeChat
      */
     private function getToken()
     {
-        $result = Http::get(self::API_URL_PREFIX . self::AUTH_URL . 'appid=' . $this->appid . '&secret=' . $this->appsecret);
+        $result = Http::get(self::API_URL_PREFIX . self::AUTH_URL
+            . 'appid=' . $this->appid . '&secret=' . $this->appsecret);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
