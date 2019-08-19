@@ -60,3 +60,5 @@
 > 小程序常用接口
 ### [Algorithm.php](https://github.com/lzqqdy/tools/blob/master/src/Algorithm.php)
 > PHP实现基础算法
+### [Validate.php](https://github.com/lzqqdy/tools/blob/master/src/Validate.php)
+> 常用验证规则
