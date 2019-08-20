@@ -190,7 +190,7 @@ class Arr
             if (is_array($value)) {
                 self::array_multi2single($value);
             } else {
-                $result_array [] = $value;
+                $arr [] = $value;
             }
         }
         return $arr;

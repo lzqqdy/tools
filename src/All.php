@@ -491,7 +491,7 @@ class All
             if (is_array($value)) {
                 $this->array_multi2single($value);
             } else {
-                $result_array [] = $value;
+                $arr [] = $value;
             }
         }
         return $arr;
