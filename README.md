@@ -38,6 +38,7 @@
 * 数组转xml arrayToXml
 * 将二维数组以指定的key作为数组的键名 convert_arr_key
 * 两个数组的笛卡尔积 combineArray
+* 数组随机抽出一个 arrayRandOne
 * ......
 ```
 ### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)
