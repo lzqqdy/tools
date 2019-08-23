@@ -40,6 +40,15 @@ class Validate
     {
         return preg_match("/^1(3|4|5|6|7|8|9)\d{9}$/", $num);
     }
+
+    /**
+     * 微信端
+     * @return bool
+     */
+    public static function is_wechat()
+    {
+        return strpos($_SERVER ['HTTP_USER_AGENT'], 'MicroMessenger') !== false ? true : false;
+    }
     //TODO 身份证号|密码强度|文件格式|URL|IP|邮编
 
 }
