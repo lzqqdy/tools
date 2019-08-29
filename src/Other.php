@@ -86,4 +86,14 @@ class Other
         }
     }
 
+    /**
+     * 密码加密
+     * @param $str
+     * @param string $auth_key
+     * @return string
+     */
+    function pwd_md5($str, $auth_key = '')
+    {
+        return '' === $str ? '' : md5(sha1($str) . $auth_key);
+    }
 }
