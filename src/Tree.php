@@ -97,7 +97,8 @@ class Tree
                     $title_prefix = str_repeat("&nbsp;", $level * self::$config['step']) . self::$config['html'];
                     $value['level'] = $level + 1;
                     $value['title_prefix'] = $level == 0 ? '' : $title_prefix;
-                    $value['title_display'] = $level == 0 ? $value[self::$config['title']] : $title_prefix . $value[self::$config['title']];
+                    $value['title_display'] = $level == 0 ? $value[self::$config['title']] :
+                        $title_prefix . $value[self::$config['title']];
                     $trees[] = $value;
                     unset($lists[$key]);
                     $trees = array_merge($trees, self::toList($lists, $value[self::$config['id']], $level + 1));
@@ -110,7 +111,8 @@ class Tree
                     $title_prefix = str_repeat("&nbsp;", $level * self::$config['step']) . self::$config['html'];
                     $value['level'] = $level + 1;
                     $value['title_prefix'] = $level == 0 ? '' : $title_prefix;
-                    $value['title_display'] = $level == 0 ? $value[self::$config['title']] : $title_prefix . $value[self::$config['title']];
+                    $value['title_display'] = $level == 0 ? $value[self::$config['title']] :
+                        $title_prefix . $value[self::$config['title']];
                     $lists->offsetUnset($key);
                     $lists[] = $value;
                     self::toList($lists, $value[self::$config['id']], $level + 1);
