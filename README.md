@@ -63,3 +63,6 @@
 > PHP实现基础算法
 ### [Validate.php](https://github.com/lzqqdy/tools/blob/master/src/Validate.php)
 > 常用验证规则
+### [Image.php](https://github.com/lzqqdy/tools/blob/master/src/Image.php)
+> 图片处理
+
