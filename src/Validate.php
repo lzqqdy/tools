@@ -63,6 +63,19 @@ class Validate
         }
         return false;
     }
+
+    /**
+     * 固话
+     * @param $num
+     * @return bool
+     */
+    public static function check_telephone($num)
+    {
+        if (preg_match('/^([0-9]{3,4}-)?[0-9]{7,8}$/', $num)) {
+            return true;
+        }
+        return false;
+    }
     //TODO 身份证号|密码强度|文件格式|URL|IP|邮编
 
 }
