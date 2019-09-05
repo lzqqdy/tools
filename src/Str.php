@@ -630,4 +630,19 @@ class Str
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
         return str_replace(' ', '', $value);
     }
+
+    /**
+     * PHP利用正则表达式实现手机号码中间4位用星号替换显示
+     * @param $phone
+     * @return string|string[]|null
+     */
+    public static function hideTel($phone)
+    {
+        $IsWhat = preg_match('/(0[0-9]{2,3}[-]?[2-9][0-9]{6,7}[-]?[0-9]?)/i', $phone); //固定电话
+        if ($IsWhat == 1) {
+            return preg_replace('/(0[0-9]{2,3}[-]?[2-9])[0-9]{3,4}([0-9]{3}[-]?[0-9]?)/i', '$1****$2', $phone);
+        } else {
+            return preg_replace('/(1[358]{1}[0-9])[0-9]{4}([0-9]{4})/i', '$1****$2', $phone);
+        }
+    }
 }
