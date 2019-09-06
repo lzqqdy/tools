@@ -6,7 +6,7 @@
 > 搜集平时项目中常用的方法，备份日后使用
 #### 安装
 > composer require lzqqdy/tools
-### [All.php](https://github.com/lzqqdy/tools/blob/master/src/All.php) 
+ 
 ```
 * 多维数组按照某字段排序  sortArrByOneField  
 * 多维数组格式化日期  formatDate 
@@ -39,6 +39,13 @@
 * 将二维数组以指定的key作为数组的键名 convert_arr_key
 * 两个数组的笛卡尔积 combineArray
 * 数组随机抽出一个 arrayRandOne
+* 图片转Base64 imageToBase64
+* Base64保存为图片 base64ToImage
+* 生成UUID uuid
+* 生成订单号 createOrderNum
+* 生成随机密码 getRandPass
+* 手机号码中间4位用星号替换显示 hideTel
+* 计算两个时间戳之间相差的时间 timeDiff
 * ......
 ```
 ### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)
