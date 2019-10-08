@@ -151,4 +151,14 @@ class Other
         }
         return $str;
     }
+
+    /**
+     * 格式化数据化手机号码
+     * @param $mobile
+     * @return string
+     */
+    public static function format_mobile($mobile)
+    {
+        return substr($mobile, 0, 5) . "****" . substr($mobile, 9, 2);
+    }
 }
