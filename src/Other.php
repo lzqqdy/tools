@@ -123,4 +123,32 @@ class Other
         $return['new_total'] = array_sum($temp);
         return $return;
     }
+
+    /**
+     * 格式化银行卡号，前四位和最后显示原样的，其他隐藏
+     * @param $cardNo
+     * @return string
+     */
+    public static function bankCardNoFormat($cardNo)
+    {
+        $n = strlen($cardNo);
+        //判断尾部几位显示原型
+        if ($n % 4 == 0) {
+            $j = 4;
+        } else {
+            $j = $n % 4;
+        }
+        $str = "";
+        for ($i = 0; $i < $n; $i++) {
+            if ($i < 4 || $i > $n - $j - 1) {
+                $str .= $cardNo[$i];
+            } else {
+                $str .= "*";
+            }
+            if ($i % 4 == 3) {
+                $str .= " ";
+            }
+        }
+        return $str;
+    }
 }
