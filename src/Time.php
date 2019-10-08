@@ -204,4 +204,15 @@ class Time
         $res = array("day" => $days, "hour" => $hours, "min" => $mins, "sec" => $secs);
         return $res;
     }
+
+    /**
+     * 返回当前的毫秒时间戳
+     * @return string
+     */
+    public static function msectime()
+    {
+        list($tmp1, $tmp2) = explode(' ', microtime());
+        return sprintf('%.0f', (floatval($tmp1) + floatval($tmp2)) * 1000);
+    }
+
 }
