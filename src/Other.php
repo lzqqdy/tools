@@ -161,4 +161,50 @@ class Other
     {
         return substr($mobile, 0, 5) . "****" . substr($mobile, 9, 2);
     }
+
+    /**
+     * 替换富文本编辑器中的图片地址
+     * @param null $content
+     * @param null $strUrl
+     * @return string|string[]|null
+     */
+    public static function replacePicUrl(&$content = null, $strUrl = null)
+    {
+        if ($strUrl) {
+            //提取图片路径的src的正则表达式 并把结果存入$matches中
+            preg_match_all("/<[img|IMG].*?src=[\'|\"](.*?(?:[\.jpg|\.jpeg|\.png|\.gif|\.bmp]))[\'|\"].*?[\/]?>/",
+                $content,
+                $matches);
+            if (!empty($matches)) {
+                //注意，上面的正则表达式说明src的值是放在数组的第二个中
+                $img = $matches[1];
+            } else {
+                $img = "";
+            }
+            if (!empty($img)) {
+                $patterns = array();
+                $replacements = array();
+                foreach ($img as $imgItem) {
+                    if (!filter_var($imgItem, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
+                        $final_imgUrl = $strUrl . $imgItem;
+                    } else {
+                        $final_imgUrl = $imgItem;
+                    }
+                    $replacements[] = $final_imgUrl;
+                    $img_new = "/" . preg_replace("/\//i", "\/", $imgItem) . "/";
+                    $patterns[] = $img_new;
+                }
+                //让数组按照key来排序
+                ksort($patterns);
+                ksort($replacements);
+                //替换内容
+                $vote_content = preg_replace($patterns, $replacements, $content);
+                return $vote_content;
+            } else {
+                return $content;
+            }
+        } else {
+            return $content;
+        }
+    }
 }
