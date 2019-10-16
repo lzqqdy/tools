@@ -46,6 +46,7 @@
 * 生成随机密码 getRandPass
 * 手机号码中间4位用星号替换显示 hideTel
 * 计算两个时间戳之间相差的时间 timeDiff
+* 替换富文本编辑器中的图片地址 replacePicUrl
 * ......
 ```
 ### [Arr.php](https://github.com/lzqqdy/tools/blob/master/src/Arr.php)
