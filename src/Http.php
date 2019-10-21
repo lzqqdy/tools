@@ -2,8 +2,6 @@
 
 namespace lzqqdy\tools;
 
-use lzqqdy\tools\File;
-
 /**
  * HTTP请求
  * Class Http
