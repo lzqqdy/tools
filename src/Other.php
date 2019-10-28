@@ -210,4 +210,15 @@ class Other
             return $content;
         }
     }
+
+    /**
+     * 不足时几位数时，前面补零
+     * @param int $len
+     * @param int $number
+     * @return string
+     */
+    public static function fillZero($len = 0, $number = 0)
+    {
+        return sprintf("%0" . $len . "d", $number);//生成4位数，不足前面补0
+    }
 }
