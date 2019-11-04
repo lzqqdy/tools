@@ -6,7 +6,11 @@
 > 搜集平时项目中常用的方法，备份日后使用
 #### 安装
 > composer require lzqqdy/tools
- 
+##### Demo
+```
+use lzqqdy\tools\Http;
+Http::get($url);
+```
 ```
 * 多维数组按照某字段排序  sortArrByOneField  
 * 多维数组格式化日期  formatDate 
