@@ -159,7 +159,7 @@ class Other
      */
     public static function format_mobile($mobile)
     {
-        return substr($mobile, 0, 5) . "****" . substr($mobile, 9, 2);
+        return substr($mobile, 0, 3) . "****" . substr($mobile, 9, 2);
     }
 
     /**
