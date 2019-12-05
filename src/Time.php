@@ -215,4 +215,17 @@ class Time
         return sprintf('%.0f', (floatval($tmp1) + floatval($tmp2)) * 1000);
     }
 
+    /**
+     * 获取指定年月的开始和结束时间戳
+     * @param int $y 年份
+     * @param int $m 月份
+     * @return array(开始时间,结束时间)
+     */
+    public static function mStartAndEnd($y = 0, $m = 0)
+    {
+        $y = $y ? $y : date('Y');
+        $m = $m ? $m : date('m');
+        $d = date('t', strtotime($y . '-' . $m));
+        return ["start" => strtotime($y . '-' . $m), "end" => mktime(23, 59, 59, $m, $d, $y)];
+    }
 }
