@@ -221,4 +221,18 @@ class Other
     {
         return sprintf("%0" . $len . "d", $number);//生成4位数，不足前面补0
     }
+
+    /**
+     * 将数字转换成逗号分隔的形式
+     * @param $number
+     * @return string
+     */
+    public static function number2thousands($number)
+    {
+        $number = (string)strrev($number);           // 反转字符串
+        $number = chunk_split($number, 3, ',');      // 以逗号,将字符串分隔成小段，每小段长度为3
+        $number = strrev($number);                   // 再转回来
+
+        return ltrim($number, ',');           // 删除左边多余的逗号
+    }
 }
