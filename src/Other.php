@@ -224,6 +224,7 @@ class Other
 
     /**
      * 将数字转换成逗号分隔的形式
+     * 同：number_format
      * @param $number
      * @return string
      */
