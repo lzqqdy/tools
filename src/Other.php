@@ -236,4 +236,15 @@ class Other
 
         return ltrim($number, ',');           // 删除左边多余的逗号
     }
+
+    /**
+     * 检测时间格式是否合法
+     * @param $date
+     * @param string $format
+     * @return bool
+     */
+    public static function verifyDate($date, $format = 'Y-m-d H:i:s')
+    {
+        return \DateTime::createFromFormat($format, $date) !== false;
+    }
 }
