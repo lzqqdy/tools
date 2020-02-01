@@ -156,5 +156,5 @@ class Validate
         $verify_number = $verify_number_list[$mod];
         return $verify_number;
     }
-    //github 提交测试
+    //github 提交测试1
 }
