@@ -311,9 +311,9 @@ class Arr
 
     /**
      * 两个数组的笛卡尔积
-     *
-     * @param array $arr1
-     * @param array $arr2
+     * @param $arr1
+     * @param $arr2
+     * @return array
      */
     public static function combineArray($arr1, $arr2)
     {
@@ -340,5 +340,22 @@ class Arr
         }
         mt_srand();
         return $data[array_rand($data)];
+    }
+
+    /**
+     * @desc 将二维数组以元素的某个值作为键 并归类数组
+     * array( array('name'=>'aa','type'=>'pay'), array('name'=>'cc','type'=>'pay') )
+     * array('pay'=>array( array('name'=>'aa','type'=>'pay') , array('name'=>'cc','type'=>'pay') ))
+     * @param $arr array 数组
+     * @param $key string 分组值的key
+     * @return array
+     */
+    public static function groupSameKey($arr, $key)
+    {
+        $new_arr = [];
+        foreach ($arr as $k => $v) {
+            $new_arr[$v[$key]][] = $v;
+        }
+        return $new_arr;
     }
 }
