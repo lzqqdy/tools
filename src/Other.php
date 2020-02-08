@@ -247,4 +247,20 @@ class Other
     {
         return \DateTime::createFromFormat($format, $date) !== false;
     }
+
+    /**
+     * IE浏览器判断
+     * @return bool
+     */
+    public static function isIE()
+    {
+        $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        if ((strpos($user_agent, 'opera') !== false) || (strpos($user_agent, 'konqueror') !== false)) {
+            return false;
+        }
+        if (strpos($user_agent, 'msie') !== false) {
+            return true;
+        }
+        return false;
+    }
 }
