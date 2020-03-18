@@ -228,4 +228,25 @@ class Time
         $d = date('t', strtotime($y . '-' . $m));
         return ["start" => strtotime($y . '-' . $m), "end" => mktime(23, 59, 59, $m, $d, $y)];
     }
+
+    /**
+     * excel时间转换
+     * @param $date
+     * @param bool $time
+     * @return array|string
+     */
+    public static functionexcelTime($date, $time = false)
+    {
+        if (is_numeric($date)) {
+            $jd = GregorianToJD(1, 1, 1970);
+            $gregorian = JDToGregorian($jd + intval($date) - 25569);
+            $date = explode('/', $gregorian);
+            $date_str = str_pad($date[2], 4, '0', STR_PAD_LEFT)
+                . "-" . str_pad($date[0], 2, '0', STR_PAD_LEFT)
+                . "-" . str_pad($date[1], 2, '0', STR_PAD_LEFT)
+                . ($time ? " 00:00:00" : '');
+            return $date_str;
+        }
+        return $date;
+    }
 }
