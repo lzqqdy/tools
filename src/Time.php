@@ -249,4 +249,25 @@ class Time
         }
         return $date;
     }
+    
+     /**
+     * 秒数转换
+     * @param $time
+     * @return string
+     */
+    public static function changeTime($time)
+    {
+        $d = floor($time / (3600 * 24));
+        $h = floor(($time % (3600 * 24)) / 3600);
+        $m = floor((($time % (3600 * 24)) % 3600) / 60);
+        if ($d > '0') {
+            return $d . '天' . $h . '小时' . $m . '分';
+        } else {
+            if ($h != '0') {
+                return $h . '小时' . $m . '分';
+            } else {
+                return $m . '分';
+            }
+        }
+    }
 }
