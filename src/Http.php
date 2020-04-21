@@ -263,4 +263,78 @@ class Http
         }
         return true;
     }
+
+    /**
+     * 批量请求无依赖关系的接口【POST】
+     * eg：
+     * $url1= ['url' => 'www.baidu.com', 'param' => ['id'=>1,'type'=>2]];
+     * $url2= ['url' => 'www.qq.com', 'param' => ['id'=>1,'type'=>2]];
+     * Http::sendPostMultiRequest($url1, $url2，$url3);
+     *
+     * @param mixed ...$url
+     * PHP > 5.6
+     * @return mixed 二维数组
+     */
+    public static function sendPostMultiRequest(...$url)
+    {
+        return self::_multiCurlRequest($url);
+    }
+
+    /**
+     * multi_curl并发请求多个接口
+     * @param $url
+     * @return bool
+     */
+    private static function _multiCurlRequest($url)
+    {
+        $mh = curl_multi_init();
+
+        array_map(function ($item) use ($mh) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $item['url']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, $item['timeout']);
+            curl_setopt($ch, CURLOPT_USERAGENT,
+                'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16C50 renrenmine');
+            if ($item['param']) {
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $item['param']);
+            }
+            curl_multi_add_handle($mh, $ch);
+        }, $url);
+
+        do {
+            $mc = curl_multi_exec($mh, $runing);
+            //当返回值等于CURLM_CALL_MULTI_PERFORM时，表明数据还在写入或读取中，执行循环，
+            //当第一次$ch句柄的数据写入或读取成功后，返回值变为CURLM_OK，跳出本次循环，进入下面的大循环之中
+        } while ($mc == CURLM_CALL_MULTI_PERFORM);
+
+        while ($runing && $mc == CURLM_OK) {
+            //阻塞直到cURL批处理连接中有活动连接。成功时返回描述符集合中描述符的数量。失败时，select失败时返回-1
+            if (curl_multi_select($mh) != -1) {
+                //$mh批处理中还有可执行的$ch句柄，curl_multi_select($mh) != -1程序退出阻塞状态。
+                do {
+                    //有活动连接时执行
+                    $mc = curl_multi_exec($mh, $runing);
+                } while ($mc == CURLM_CALL_MULTI_PERFORM);
+            }
+
+            while ($done = curl_multi_info_read($mh)) {
+                //获取信息
+                $info = curl_getinfo($done['handle']);
+                $results = curl_multi_getcontent($done['handle']);
+
+                //数据返回格式
+                //url：url与结果对应，数组按照相应时间升序排序
+                $output[] = ['url' => $info['url'], 'http_code' => $info['http_code'], 'results' => $results];
+
+                curl_multi_remove_handle($mh, $done['handle']);
+                curl_close($done['handle']);
+            }
+        }
+        curl_multi_close($mh);
+        return $output ? $output : false;
+    }
 }
