@@ -183,7 +183,6 @@ class Other
                 $img = "";
             }
             if (!empty($img)) {
-
                 $patterns = array();
                 $replacements = array();
                 foreach ($img as $imgItem) {
@@ -262,5 +261,23 @@ class Other
             return true;
         }
         return false;
+    }
+
+    /**
+     * 解析url中参数信息，返回参数数组
+     * @param $query
+     * @return array
+     */
+    public static function convertUrlQuery($query)
+    {
+        $queryParts = explode('&', $query);
+
+        $params = array();
+        foreach ($queryParts as $param) {
+            $item = explode('=', $param);
+            $params[$item[0]] = $item[1];
+        }
+        
+        return $params;
     }
 }
