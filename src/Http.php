@@ -80,7 +80,7 @@ class Http
         $defaults[CURLOPT_FOLLOWLOCATION] = true;
         $defaults[CURLOPT_RETURNTRANSFER] = true;
         $defaults[CURLOPT_CONNECTTIMEOUT] = 3;
-        $defaults[CURLOPT_TIMEOUT] = 3;
+        $defaults[CURLOPT_TIMEOUT] = 10;
 
         // disable 100-continue
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
