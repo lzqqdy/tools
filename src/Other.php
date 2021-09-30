@@ -189,7 +189,8 @@ class Other
                     if (!filter_var($imgItem, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
                         $final_imgUrl = $strUrl . $imgItem;
                     } else {
-                        $final_imgUrl = $imgItem;
+                        $reg = '/(http|https):\/\/([^\/]+)/i';
+                        $final_imgUrl= preg_replace($reg, $strUrl, $imgItem);
                     }
                     $replacements[] = $final_imgUrl;
                     $img_new = "/" . preg_replace("/\//i", "\/", $imgItem) . "/";
